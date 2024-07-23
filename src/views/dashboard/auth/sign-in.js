@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,7 +10,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 // Import selectors & action from setting store
 import * as SettingSelector from "../../../store/setting/selectors";
 // Redux Selector / Action
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //img
 // import logo from "../../../assets/images/logo-full.png";
@@ -18,11 +18,35 @@ import login1 from "../../../assets/images/login/1.jpg";
 import login2 from "../../../assets/images/login/2.jpg";
 import login3 from "../../../assets/images/login/3.jpg";
 import logo from '../../../assets/logo/logo.png'
+import { loginUser } from "../../../store/setting/reducers";
 // install Swiper modules
 SwiperCore.use([Navigation, Autoplay]);
-
+//redux state
 const SignIn = () => {
+  const { loading } = useSelector((state) => state.user)
   const appName = useSelector(SettingSelector.app_name);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, seterror] = useState('')
+  const dispatch = useDispatch()
+  let navigate = useNavigate()
+  const handleLogin = (e) => {
+    // console.log(e);
+    e.preventDefault();
+    let userCredentials = {
+      email, password
+    }
+    dispatch(loginUser(userCredentials)).then((result) => {
+      console.log(result)
+      if (result.payload?.message === "User Login Successfully") {
+        setEmail('');
+        setPassword('');
+        navigate("/")
+      }
+      localStorage.setItem("token",result.payload.token)
+      seterror(result.payload?.message)
+    })
+  }
 
   return (
     <>
@@ -116,7 +140,7 @@ const SignIn = () => {
                     />
                   </svg> */}
 
-                  <img src={logo} width={50} alt="logo"/>
+                  <img src={logo} width={50} alt="logo" />
                   <h2 className="logo-title" data-setting="app_name">
                     {appName}
                   </h2>
@@ -125,7 +149,7 @@ const SignIn = () => {
                   Welcome to socialV, a platform to connect with
                   <br /> the social world
                 </p>
-                <Form className="mt-5">
+                <Form className="mt-5" onSubmit={handleLogin}>
                   <Form.Group className="form-group text-start">
                     <h6 className="form-label fw-bold">
                       Username or Email Address
@@ -135,6 +159,8 @@ const SignIn = () => {
                       className="form-control mb-0"
                       placeholder="Your Full Name"
                       defaultValue="marvin"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="form-group text-start">
@@ -144,6 +170,8 @@ const SignIn = () => {
                       className="form-control mb-0"
                       placeholder="Password"
                       defaultValue="marvin"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </Form.Group>
                   <div className="d-flex align-items-center justify-content-between">
@@ -161,11 +189,19 @@ const SignIn = () => {
                   {/* <Link type="button" className="btn btn-primary mt-4 fw-semibold text-uppercase w-100" to="#">sign in</Link> */}
                   <Button
                     variant="primary"
-                    type="button"
+                    type="submit"
                     className="btn btn-primary mt-4 fw-semibold text-uppercase w-100"
+
                   >
-                    Sign in
+                    {loading ? "Sign in..." : "Sign in"}
                   </Button>
+                  {error && (
+                    <div className="alert alert-danger mt-2" role="alert" >
+                      {JSON.stringify(error)}
+                    </div>
+                  )
+
+                  }
                   <h6 className="mt-5">
                     Don't Have An Account ?{" "}
                     <Link to="/auth/sign-up">Sign Up</Link>

@@ -11,6 +11,8 @@ import CustomToggle from "./dropdowns";
 
 //images
 import user1 from "../assets/images/user/1.jpg";
+import { useDispatch } from "react-redux";
+import { uploadContentAsync } from "../store/setting/reducers";
 // import small1 from "../assets/images/small/07.png";
 // import small2 from "../assets/images/small/08.png";
 // import small3 from "../assets/images/small/09.png";
@@ -24,6 +26,53 @@ const CreatePost = (props) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [file, setFile] = useState([]);
+  const [caption, setCaption] = useState('');
+
+  const dispatch = useDispatch()
+  const handleCaptionChange = (e) => {
+    setCaption(e.target.value);
+  };
+  const handleFileChange = (e) => {
+    // const selectedFile = e.target.files[0];
+    // if (selectedFile) {
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(selectedFile);
+    //   reader.onloadend = () => {
+    //     setFile(reader.result);
+    //   };
+    // }
+
+    for (let index = 0; index < e.target.files.length; index++) {
+      const file = e.target.files[index];
+      const Reader = new FileReader();
+      Reader.readAsDataURL(file);
+
+      Reader.onload = () => {
+        if (Reader.readyState === 2) {
+
+
+          setFile((pre) => [
+            ...pre,
+            Reader.result,
+          ]);
+        }
+      };
+    }
+  };
+  const handleUpload = () => {
+    if (file && caption) {
+      const formData = {
+        file: file,
+        caption: caption,
+      };
+
+      dispatch(uploadContentAsync({
+        caption, file,
+
+      }));
+    }
+  };
   return (
     <>
       <div id="post-modal-data" className={`card ${props.class}`}>
@@ -250,6 +299,7 @@ const CreatePost = (props) => {
                   className="form-control rounded"
                   placeholder="Write something here..."
                   style={{ border: "none" }}
+                  value={caption} onChange={handleCaptionChange}
                 />
               </form>
             </div>
@@ -257,11 +307,11 @@ const CreatePost = (props) => {
             <ul className="d-flex flex-wrap align-items-center list-inline m-0 p-0">
               <li className="col-md-6 mb-3">
                 <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body"><span className="material-symbols-outlined align-middle font-size-20 me-1">
-                    add_a_photo
-                  </span>{" "}
-                    Photo/Video
-                  </Link>
+                  {/* <Link to="#" className="custom-link-color d-inline-block fw-medium text-body"><span className="material-symbols-outlined align-middle font-size-20 me-1"> */}
+                  {/* </span>{" "} */}
+                  <input type="file" onChange={handleFileChange} />
+                  Photo/Video
+                  {/* </Link> */}
 
                 </div>
               </li>
@@ -404,7 +454,7 @@ const CreatePost = (props) => {
                 </div>
               </div>
             </div>
-            <Button variant="primary" className="d-block w-100 mt-3">
+            <Button variant="primary" className="d-block w-100 mt-3" type="submit" onClick={handleUpload}>
               Post
             </Button>
           </Modal.Body>

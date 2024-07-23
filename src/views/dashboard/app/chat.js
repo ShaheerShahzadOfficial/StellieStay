@@ -21,6 +21,17 @@ import Scrollbar from "smooth-scrollbar";
 
 
 const Chat = () => {
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  //date
+  const currentDate = new Date();
+  const dateString = currentDate.toDateString();
+  const parts = dateString.split(' ');
+  const formattedDate = `${parts[0]} ${parts[1]}, ${parts[2]}`;
+  console.log(formattedDate);
+
+  //date
+
 
   useEffect(() => {
     Scrollbar.init(document.querySelector(".data-scrollbar"));
@@ -75,6 +86,50 @@ const Chat = () => {
       name: "Leonardo DiCaprio"
     }
   ]
+  const contact = [
+    {
+      id: 1,
+      profile: user1,
+      name: "Paul Molive",
+      timestamp: "03:20 PM",
+      lastMessage: "lorem ipsum",
+      copyContact: "0011100011"
+    },
+    {
+      id: 2,
+      profile: user1,
+      name: "Paul Molive",
+      timestamp: "03:20 PM",
+      lastMessage: "lorem ipsum",
+      copyContact: "0011100012"
+    },
+    {
+      id: 3,
+      profile: user1,
+      name: "Paul Molive",
+      timestamp: "03:20 PM",
+      lastMessage: "lorem ipsum",
+      copyContact: "0011100013"
+    },
+    {
+      id: 4,
+      profile: user1,
+      name: "Paul Molive",
+      timestamp: "03:20 PM",
+      lastMessage: "lorem ipsum",
+      copyContact: "0011100014"
+    },
+  ]
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setCopySuccess(true);
+      })
+      .catch(err => {
+        console.error('Error copying text: ', err);
+        setCopySuccess(false);
+      });
+  };
 
   return (
     <>
@@ -168,76 +223,82 @@ const Chat = () => {
                 role="tablist"
               >
                 <h6 className="mb-3 pb-1">Recent Chats</h6>
-                <Nav.Item as="li"
-                  className="iq-chat-list mb-3 ps-0"
-                  role="presentation"
-                >
-                  <Nav.Link
-                    className={`d-flex gap-3 rounded-2 zoom-in ${active === "first" ? 'active' : ''}`}
-                    eventKey="first"
-                    onClick={() => setActive("first")}
-                  >
-                    <div className="position-relative">
-                      <img
-                        src={user1}
-                        alt="status-101"
-                        className="avatar-48 object-cover rounded-circle"
-                        loading="lazy"
-                      />
-                      <div className="iq-profile-badge bg-success"></div>
-                    </div>
-                    <div className="d-flex align-items-top w-100 iq-userlist-data">
-                      <div className="d-flex flex-grow-1 flex-column">
-                        <div className="d-flex align-items-center gap-1">
-                          <h6 className="mb-0 iq-userlist-name font-size-14 fw-semibold mb-0 text-ellipsis short-1 flex-grow-1">
-                            Paul Molive
-                          </h6>
-                          <span className="mb-0 font-size-12">
-                            03:20 PM
-                          </span>
+                {contact.map((items, i) => {
+                  return (
+                    <Nav.Item as="li"
+                      className="iq-chat-list mb-3 ps-0"
+                      role="presentation"
+                    >
+                      <Nav.Link
+                        className={`d-flex gap-3 rounded-2 zoom-in ${active === i ? 'active' : ''}`}
+                        eventKey="first"
+                        // onClick={() => setActive("first")}
+                        onClick={() => setActive(i)}
+                      >
+                        <div className="position-relative">
+                          <img
+                            src={items.profile}
+                            alt="status-101"
+                            className="avatar-48 object-cover rounded-circle"
+                            loading="lazy"
+                          />
+                          <div className="iq-profile-badge bg-success"></div>
                         </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <p className="text-ellipsis short-1 flex-grow-1 font-size-14 mb-0">
-                            Lorem ipsum
-                          </p>
-                          <Dropdown className="btn-group dropdown-user">
-                            <Dropdown.Toggle
-                              as="span"
-                              className="bg-transparent dropdown-toggle border-0 text-white"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            ></Dropdown.Toggle>
-                            <Dropdown.Menu as="ul" className="dropdown-menu dropdown-menu-end p-0">
-                              <li>
-                                <Dropdown.Item
-                                  className=" font-size-14 text-dark px-2"
-                                  type="button"
-                                >
-                                  <span className="material-symbols-outlined mx-1 font-size-20 align-middle text-body">
-                                    share
-                                  </span>
-                                  Share Contact
-                                </Dropdown.Item>
-                              </li>
-                              <li>
-                                <Dropdown.Item
-                                  className=" font-size-14 text-dark px-2"
-                                  type="button"
-                                >
-                                  <span className="material-symbols-outlined mx-1 font-size-20 align-middle text-body">
-                                    content_copy
-                                  </span>
-                                  Copy Contact
-                                </Dropdown.Item>
-                              </li>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                        <div className="d-flex align-items-top w-100 iq-userlist-data">
+                          <div className="d-flex flex-grow-1 flex-column">
+                            <div className="d-flex align-items-center gap-1">
+                              <h6 className="mb-0 iq-userlist-name font-size-14 fw-semibold mb-0 text-ellipsis short-1 flex-grow-1">
+                                {items.name}
+                              </h6>
+                              <span className="mb-0 font-size-12">
+                                {items.timestamp}
+                              </span>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <p className="text-ellipsis short-1 flex-grow-1 font-size-14 mb-0">
+                                {items.lastMessage}
+                              </p>
+                              <Dropdown className="btn-group dropdown-user">
+                                <Dropdown.Toggle
+                                  as="span"
+                                  className="bg-transparent dropdown-toggle border-0 text-white"
+                                  data-bs-toggle="dropdown"
+                                  aria-expanded="false"
+                                ></Dropdown.Toggle>
+                                <Dropdown.Menu as="ul" className="dropdown-menu dropdown-menu-end p-0">
+                                  <li>
+                                    <Dropdown.Item
+                                      className=" font-size-14 text-dark px-2"
+                                      type="button"
+                                    >
+                                      <span className="material-symbols-outlined mx-1 font-size-20 align-middle text-body">
+                                        share
+                                      </span>
+                                      Share Contact
+                                    </Dropdown.Item>
+                                  </li>
+                                  <li>
+                                    <Dropdown.Item
+                                      className=" font-size-14 text-dark px-2"
+                                      type="button"
+                                    >
+                                      <span className="material-symbols-outlined mx-1 font-size-20 align-middle text-body">
+                                        content_copy
+                                      </span>
+                                      <button onClick={() => copyToClipboard(items.copyContact)} style={{ border: "none", outline: "none", background: "transparent" }}>Copy Contact</button>
+                                    </Dropdown.Item>
+                                  </li>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li"
+                      </Nav.Link>
+                    </Nav.Item>
+                  )
+                })
+                }
+                {/* <Nav.Item as="li"
                   className="iq-chat-list mb-3 ps-0 "
                   role="presentation"
                 >
@@ -784,8 +845,9 @@ const Chat = () => {
                       </div>
                     </div>
                   </Nav.Link>
-                </Nav.Item>
+                </Nav.Item> */}
               </ul>
+
             </div>
           </div>
           <div className="sidebar-footer"></div>
@@ -907,7 +969,7 @@ const Chat = () => {
                 </div>
                 <div className="card-body chat-body bg-body">
                   <div className="chat-day-title">
-                    <span className="main-title">Feb 1,2021</span>
+                    <span className="main-title">{formattedDate}</span>
                   </div>
                   <div className="iq-message-body iq-current-user">
                     <div className="chat-profile text-center">

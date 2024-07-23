@@ -58,6 +58,8 @@ import ReactFsLightbox from "fslightbox-react";
 
 // Share-offcanvas
 import ShareOffcanvasNew from "../../components/ShareOffcanvasNew";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDataAsync, selectData } from "../../store/setting/reducers";
 
 const FsLightbox = ReactFsLightbox.default
   ? ReactFsLightbox.default
@@ -272,6 +274,14 @@ const Index = () => {
       ],
     },
   ];
+  const dispatch = useDispatch();
+  const { data } = useSelector(selectData);
+  console.log("posts are coming :)", data);
+
+  const ApiLink = "https://stellie-stay-backend.vercel.app"
+  useEffect(() => {
+    dispatch(fetchDataAsync(`${ApiLink}/post/getPost`)); // Replace with your API endpoint
+  }, [dispatch]);
 
   return (
     <>
@@ -299,697 +309,161 @@ const Index = () => {
                 </Row>
                 <Row className="special-post-container">
                   <Col sm={12} className="special-post">
-                    <Card className=" card-block card-stretch card-height">
-                      <Card.Body>
-                        <div className="user-post-data">
-                          <div className="d-flex align-items-center justify-content-between">
-                            <div className="me-3 flex-shrik-0">
-                              <img
-                                className="border border-2 rounded-circle user-post-profile"
-                                src={user01}
-                                alt=""
-                              />
-                            </div>
-                            <div className="w-100">
-                              <div className="d-flex align-items-center justify-content-between">
-                                <div>
-                                  <h6 className="mb-0 d-inline-block">
-                                    Anna Sthesia
-                                  </h6>{" "}
-                                  <span className="d-inline-block text-primary">
-                                    <svg
-                                      className="align-text-bottom"
-                                      width="17"
-                                      height="17"
-                                      viewBox="0 0 17 17"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M11.8457 0H4.34822C1.73547 0 0.0974121 1.84995 0.0974121 4.46789V11.5321C0.0974121 14.1501 1.72768 16 4.34822 16H11.8449C14.4663 16 16.0974 14.1501 16.0974 11.5321V4.46789C16.0974 1.84995 14.4663 0 11.8457 0Z"
-                                        fill="currentColor"
-                                      />
-                                      <path
-                                        d="M5.09741 7.99978L7.09797 9.9995L11.0974 6.00006"
-                                        stroke="white"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      />
-                                    </svg>
-                                  </span>{" "}
-                                  <span className="mb-0 d-inline-block text-capitalize fw-medium">
-                                    posted an update
-                                  </span>
-                                  <p className="mb-0">2 minutes ago</p>
-                                </div>
-
-                                <div className="card-post-toolbar">
-                                  <Dropdown>
-                                    <Dropdown.Toggle id="post-option" as="span" >
-                                      <span className="material-symbols-outlined">more_horiz</span>
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className="m-0 p-0">
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            save
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Save Post</h6>
-                                            <p className="mb-0">
-                                              Add this to your saved items
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className="p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            cancel
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Hide Post</h6>
-                                            <p className="mb-0">
-                                              See fewer posts like this.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            person_remove
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Unfollow User</h6>
-                                            <p className="mb-0">
-                                              Stop seeing posts but stay
-                                              friends.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            notifications
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Notifications</h6>
-                                            <p className="mb-0">
-                                              Turn on notifications for this
-                                              post
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <p className="m-0">
-                            "Energy, the tangible expression of pure thought, propels intentions into powerful actions, bridging the gap between mind and manifestation."
-                          </p>
-                          <ul className="list-inline m-0 p-0 d-flex flex-wrap gap-1">
-                            <li>
-                              <Link to="#">#friends</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#party</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#birthday</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#together</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#celebration</Link>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="user-post mt-4">
-                          <Link
-                            onClick={() => imageOnSlide(1)}
-                            to="#"
-                            className="rounded"
-                          >
-                            <img
-                              src={user5}
-                              alt="post-images"
-                              className="img-fluid rounded w-100"
-                              loading="lazy"
-                            />
-                          </Link>
-                        </div>
-                        <div className="post-meta-likes mt-4">
-                          <div className="d-flex align-items-center gap-2 flex-wrap">
-                            <ul className="list-inline m-0 p-0 post-user-liked-list">
-                              <li>
+                    {data?.map((items, i) => (
+                      <Card className=" card-block card-stretch card-height" key={i}>
+                        <Card.Body >
+                          <div className="user-post-data">
+                            <div className="d-flex align-items-center justify-content-between">
+                              <div className="me-3 flex-shrik-0">
                                 <img
-                                  src={user01}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
+                                  className="border border-2 rounded-circle user-post-profile"
+                                  src={items.profile ? items.profile : user01}
+                                  alt=""
                                 />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user2}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user3}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user4}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                            </ul>
-                            <div className="d-inline-flex align-items-center gap-1">
-                              <h6 className="m-0 font-size-14">Aliana Molex</h6>
-                              <span
-                                className="text-capitalize font-size-14 fw-medium"
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#likemodal"
-                              >
-                                and 208 others liked this
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="comment-area mt-4 pt-4 border-top">
-                          <div className="d-flex justify-content-between align-items-center flex-wrap">
-                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                              <div className="like-data">
-                                <div className="dropdown">
-                                  <span
-                                    className="dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    role="button"
-                                  >
-                                    <span className="material-symbols-outlined align-text-top font-size-20">
-                                      thumb_up
-                                    </span>{" "}
-                                    <span className="fw-medium">140 Likes</span>
-                                  </span>
-                                  <div className="dropdown-menu py-2 shadow">
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Like</Tooltip>}
-                                      className="ms-2 me-2"
-                                    >
-                                      <img
-                                        src={icon1}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Love</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon2}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Happy</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon3}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>HaHa</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon4}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Think</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon5}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Sad</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon6}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Lovely</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon7}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                  </div>
-                                </div>
                               </div>
-                            </div>
-                            <div className="d-flex align-items-center gap-3 flex-shrink-0">
-                              <div
-                                className="total-comment-block"
-                                type="button"
-                                aria-controls="commentcollapes"
-                                aria-expanded={open}
-                                onClick={() => setOpen(!open)}
-                              >
-                                <span className="material-symbols-outlined align-text-top font-size-20">
-                                  comment
-                                </span>{" "}
-                                <span className="fw-medium">20 Comment</span>
-                              </div>
-
-                              <div className="share-block d-flex align-items-center feather-icon">
-                                <Link
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#share-btn"
-                                  onClick={() => setModalShow(true)}
-                                  aria-controls="share-btn"
-                                  className="d-flex align-items-center"
-                                >
-                                  <span className="material-symbols-outlined align-text-top font-size-20">
-                                    share
-                                  </span>
-                                  <span className="ms-1 fw-medium">
-                                    99 Share
-                                  </span>
-                                </Link>
-                              </div>
-                              <ShareOffcanvasNew
-                                show={modalShow}
-                                onHide={() => setModalShow(false)}
-                              />
-                            </div>
-                          </div>
-
-                          <Collapse in={open}>
-                            <div id="commentcollapes" className="border-top mt-4 pt-4">
-                              <ul className="list-inline m-o p-0 comment-list">
-                                <li className="mb-3">
-                                  <div className="comment-list-block">
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="comment-list-user-img flex-shrink-0">
-                                        <img
-                                          src={user6}
-                                          alt="userimg"
-                                          className="avatar-48 rounded-circle img-fluid"
-                                          loading="lazy"
-                                        />
-                                      </div>
-                                      <div className="comment-list-user-data">
-                                        <div className="d-inline-flex align-items-center gap-1 flex-wrap">
-                                          <h6 className="m-0">Bob Frapples</h6>
-                                          <span className="d-inline-block text-primary">
-                                            <svg
-                                              className="align-text-bottom"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="17"
-                                              height="17"
-                                              viewBox="0 0 17 17"
-                                              fill="none"
-                                            >
-                                              <path
-                                                fillRule="evenodd"
-                                                clipRule="evenodd"
-                                                d="M12.2483 0.216553H4.75081C2.13805 0.216553 0.5 2.0665 0.5 4.68444V11.7487C0.5 14.3666 2.13027 16.2166 4.75081 16.2166H12.2475C14.8689 16.2166 16.5 14.3666 16.5 11.7487V4.68444C16.5 2.0665 14.8689 0.216553 12.2483 0.216553Z"
-                                                fill="currentColor"
-                                              />
-                                              <path
-                                                d="M5.5 8.21627L7.50056 10.216L11.5 6.21655"
-                                                stroke="white"
-                                                strokeWidth="1.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                              />
-                                            </svg>
-                                          </span>
-                                          <span className="fw-medium small text-capitalize">
-                                            3 min ago
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="comment-list-user-comment">
-                                      <div className="comment-list-comment">
-                                        "Just stumbled upon this post and it's
-                                        giving me all the feels! 🙌"
-                                      </div>
-                                      <div className="comment-list-action mt-2">
-                                        <ul className="list-inline m-0 p-0 d-flex align-items-center gap-2">
-                                          <li>
-                                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                                              <div className="like-data">
-                                                <div className="dropdown">
-                                                  <span
-                                                    className="dropdown-toggle"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                    role="button"
-                                                  >
-                                                    <span className="material-symbols-outlined align-text-top font-size-18">
-                                                      thumb_up
-                                                    </span>{" "}
-                                                    <span className="fw-medium small">
-                                                      Likes
-                                                    </span>
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <span
-                                              className="fw-medium small"
-                                              data-bs-toggle="collapse"
-                                              data-bs-target="#subcomment-collapse1"
-                                              role="button"
-                                              aria-expanded="false"
-                                              aria-controls="collapseExample"
-                                            >
-                                              Reply
-                                            </span>
-                                          </li>
-                                        </ul>
-                                        <div
-                                          className="add-comment-form-block collapse mt-3"
-                                          id="subcomment-collapse1"
-                                        >
-                                          <div className="d-flex align-items-center gap-3">
-                                            <div className="flex-shrink-0">
-                                              <img
-                                                src={user1}
-                                                alt="userimg"
-                                                className="avatar-48 rounded-circle img-fluid"
-                                                loading="lazy"
-                                              />
-                                            </div>
-                                            <div className="add-comment-form">
-                                              <form>
-                                                <input
-                                                  type="text"
-                                                  className="form-control"
-                                                  placeholder="Write a Comment..."
-                                                />
-                                                <button
-                                                  type="submit"
-                                                  className="btn btn-primary font-size-12 text-capitalize px-5"
-                                                >
-                                                  post
-                                                </button>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                              <div className="add-comment-form-block">
-                                <div className="d-flex align-items-center gap-3">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      src={user1}
-                                      alt="userimg"
-                                      className="avatar-48 rounded-circle img-fluid"
-                                      loading="lazy"
-                                    />
-                                  </div>
-                                  <div className="add-comment-form">
-                                    <form>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Write a Comment..."
-                                      />
-                                      <button
-                                        type="submit"
-                                        className="btn btn-primary font-size-12 text-capitalize px-5"
+                              <div className="w-100">
+                                <div className="d-flex align-items-center justify-content-between">
+                                  <div>
+                                    <h6 className="mb-0 d-inline-block">
+                                      {items.postedBy.name}
+                                    </h6>{" "}
+                                    <span className="d-inline-block text-primary">
+                                      <svg
+                                        className="align-text-bottom"
+                                        width="17"
+                                        height="17"
+                                        viewBox="0 0 17 17"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
                                       >
-                                        post
-                                      </button>
-                                    </form>
+                                        <path
+                                          fillRule="evenodd"
+                                          clipRule="evenodd"
+                                          d="M11.8457 0H4.34822C1.73547 0 0.0974121 1.84995 0.0974121 4.46789V11.5321C0.0974121 14.1501 1.72768 16 4.34822 16H11.8449C14.4663 16 16.0974 14.1501 16.0974 11.5321V4.46789C16.0974 1.84995 14.4663 0 11.8457 0Z"
+                                          fill="currentColor"
+                                        />
+                                        <path
+                                          d="M5.09741 7.99978L7.09797 9.9995L11.0974 6.00006"
+                                          stroke="white"
+                                          strokeWidth="1.5"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                      </svg>
+                                    </span>{" "}
+                                    <span className="mb-0 d-inline-block text-capitalize fw-medium">
+                                      posted an update
+                                    </span>
+                                    <p className="mb-0">{items.createdOn.split("T")[0]}</p>
+                                  </div>
+
+                                  <div className="card-post-toolbar">
+                                    <Dropdown>
+                                      <Dropdown.Toggle id="post-option" as="span" >
+                                        <span className="material-symbols-outlined">more_horiz</span>
+                                      </Dropdown.Toggle>
+                                      <Dropdown.Menu className="m-0 p-0">
+                                        <Dropdown.Item className=" p-3" to="#">
+                                          <div className="d-flex align-items-top">
+                                            <span className="material-symbols-outlined">
+                                              save
+                                            </span>
+                                            <div className="data ms-2">
+                                              <h6>Save Post</h6>
+                                              <p className="mb-0">
+                                                Add this to your saved items
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item className="p-3" to="#">
+                                          <div className="d-flex align-items-top">
+                                            <span className="material-symbols-outlined">
+                                              cancel
+                                            </span>
+                                            <div className="data ms-2">
+                                              <h6>Hide Post</h6>
+                                              <p className="mb-0">
+                                                See fewer posts like this.
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item className=" p-3" to="#">
+                                          <div className="d-flex align-items-top">
+                                            <span className="material-symbols-outlined">
+                                              person_remove
+                                            </span>
+                                            <div className="data ms-2">
+                                              <h6>Unfollow User</h6>
+                                              <p className="mb-0">
+                                                Stop seeing posts but stay
+                                                friends.
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item className=" p-3" to="#">
+                                          <div className="d-flex align-items-top">
+                                            <span className="material-symbols-outlined">
+                                              notifications
+                                            </span>
+                                            <div className="data ms-2">
+                                              <h6>Notifications</h6>
+                                              <p className="mb-0">
+                                                Turn on notifications for this
+                                                post
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </Collapse>
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                  <Col sm={12} className="special-post">
-                    <div className="card card-block card-stretch card-height">
-                      <div className="card-body">
-                        <div className="user-post-data">
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="me-3 flex-shrik-0">
-                              <img
-                                className="border border-2 rounded-circle user-post-profile"
-                                src={user3}
-                                alt=""
-                              />
-                            </div>
-                            <div className="w-100">
-                              <div className="d-flex  justify-content-between align-items-center">
-                                <div>
-                                  <h6 className="mb-0 d-inline-block">
-                                    Barb Ackue
-                                  </h6>{" "}
-                                  <span className="d-inline-block text-primary">
-                                    <svg
-                                      className="align-text-bottom"
-                                      width="17"
-                                      height="17"
-                                      viewBox="0 0 17 17"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M11.8457 0H4.34822C1.73547 0 0.0974121 1.84995 0.0974121 4.46789V11.5321C0.0974121 14.1501 1.72768 16 4.34822 16H11.8449C14.4663 16 16.0974 14.1501 16.0974 11.5321V4.46789C16.0974 1.84995 14.4663 0 11.8457 0Z"
-                                        fill="currentColor"
-                                      />
-                                      <path
-                                        d="M5.09741 7.99978L7.09797 9.9995L11.0974 6.00006"
-                                        stroke="white"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      />
-                                    </svg>
-                                  </span>{" "}
-                                  <span className="mb-0 d-inline-block text-capitalize fw-medium">
-                                    Add A New Post
-                                  </span>
-                                  <p className="mb-0">
-                                    1 Hour ago
-                                  </p>
-                                </div>
-                                <div className="card-post-toolbar">
-                                  <Dropdown>
-                                    <Dropdown.Toggle variant="lh-1" id="post-option" as="span" >
-                                      <span className="material-symbols-outlined" >more_horiz</span>
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className="dropdown-menu m-0 p-0">
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <div className="material-symbols-outlined">
-                                            save
-                                          </div>
-                                          <div className="data ms-2">
-                                            <h6>Save Post</h6>
-                                            <p className="mb-0">
-                                              Add this to your saved items
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className="p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            cancel
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Hide Post</h6>
-                                            <p className="mb-0">
-                                              See fewer posts like this.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            person_remove
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Unfollow User</h6>
-                                            <p className="mb-0">
-                                              Stop seeing posts but stay
-                                              friends.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            notifications
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Notifications</h6>
-                                            <p className="mb-0">
-                                              Turn on notifications for this
-                                              post
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </div>
-                              </div>
-                            </div>
                           </div>
-                        </div>
-                        <div className="mt-4">
-                          <p className="m-0">
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus"
-                          </p>
-                          <ul className="list-inline m-0 p-0 d-flex flex-wrap gap-1">
-                            <li>
-                              <Link to="#">#family</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#happiness</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#travelling</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#camping</Link>
-                            </li>
-                            <li>
-                              <Link to="#">#climbing</Link>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="user-post mt-4">
-                          <Row>
-                            <Col md={4}>
-                              <Link to="#" onClick={() => imageOnSlide(2)}>
+                          <div className="mt-4">
+                            <p className="m-0">
+                              {items.caption}
+                            </p>
+                            {/* <ul className="list-inline m-0 p-0 d-flex flex-wrap gap-1">
+                              <li>
+                                <Link to="#">#friends</Link>
+                              </li>
+                              <li>
+                                <Link to="#">#party</Link>
+                              </li>
+                              <li>
+                                <Link to="#">#birthday</Link>
+                              </li>
+                              <li>
+                                <Link to="#">#together</Link>
+                              </li>
+                              <li>
+                                <Link to="#">#celebration</Link>
+                              </li>
+                            </ul> */}
+                          </div>
+                          <div className="user-post mt-4">
+                            {items.file.map((image, i) => (
+                              <Link
+                                onClick={() => imageOnSlide(1)}
+                                to="#"
+                                className="rounded"
+                                key={i}
+                              >
                                 <img
-                                  src={boyImg}
-                                  alt="post1"
-                                  className="img-fluid rounded w-100"
-                                />
-                              </Link>
-                            </Col>
-                            <Col md={4} className="mt-md-0  mt-3">
-                              <Link to="#" onClick={() => imageOnSlide(3)}>
-                                <img
-                                  src={busImg}
-                                  alt="post1"
-                                  className="img-fluid rounded w-100"
-                                />
-                              </Link>
-                            </Col>
-                            <Col md={4} className="mt-md-0  mt-3">
-                              <Link to="#" onClick={() => imageOnSlide(4)}>
-                                <img
-                                  src={img11}
-                                  alt="post1"
-                                  className="img-fluid rounded w-100"
-                                />
-                              </Link>
-                            </Col>
-                          </Row>
-                          <Row className="mt-3">
-                            <Col md={6}>
-                              <Link to="#" onClick={() => imageOnSlide(5)}>
-                                <img
-                                  src={mountain}
-                                  alt="post1"
-                                  className="img-fluid rounded w-100"
-                                />
-                              </Link>
-                            </Col>
-                            <Col md={6} className="mt-md-0 mt-3">
-                              <div className="post-overlay-box h-100 rounded">
-                                <img
-                                  src={pizza}
+                                  src={image.url}
                                   alt="post-images"
-                                  className="img-fluid rounded w-100 h-100 object-cover"
+                                  className="img-fluid rounded w-100"
                                   loading="lazy"
                                 />
-                                <Link
-                                  to="#"
-                                  className="rounded font-size-18"
-                                  data-fslightbox="gallery"
-                                  onClick={() => imageOnSlide(6)}
-                                >
-                                  +2
-                                </Link>
-                              </div>
-                            </Col>
-                          </Row>
-                          <div className="post-meta-likes mt-4">
+                              </Link>
+                            ))}
+                          </div>
+                          {/* <div className="post-meta-likes mt-4">
                             <div className="d-flex align-items-center gap-2 flex-wrap">
                               <ul className="list-inline m-0 p-0 post-user-liked-list">
                                 <li>
@@ -1026,9 +500,7 @@ const Index = () => {
                                 </li>{" "}
                               </ul>
                               <div className="d-inline-flex align-items-center gap-1">
-                                <h6 className="m-0 font-size-14">
-                                  Aliana Molex
-                                </h6>
+                                <h6 className="m-0 font-size-14">Aliana Molex</h6>
                                 <span
                                   className="text-capitalize font-size-14 fw-medium"
                                   type="button"
@@ -1039,1241 +511,314 @@ const Index = () => {
                                 </span>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="comment-area mt-4 pt-4 border-top">
-                          <div className="d-flex justify-content-between align-items-center flex-wrap">
-                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                              <div className="like-data">
-                                <div className="dropdown">
-                                  <span
-                                    className="dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    role="button"
-                                  >
-                                    <span className="material-symbols-outlined align-text-top font-size-20">
-                                      thumb_up
-                                    </span>{" "}
-                                    <span className="fw-medium">140 Likes</span>
-                                  </span>
-                                  <div className="dropdown-menu py-2 shadow">
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Like</Tooltip>}
-                                      className="ms-2 me-2"
+                          </div> */}
+                          <div className="comment-area mt-4 pt-4 border-top">
+                            <div className="d-flex justify-content-between align-items-center flex-wrap">
+                              <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
+                                <div className="like-data">
+                                  <div className="dropdown">
+                                    <span
+                                      className="dropdown-toggle"
+                                      data-bs-toggle="dropdown"
+                                      aria-haspopup="true"
+                                      aria-expanded="false"
+                                      role="button"
                                     >
-                                      <img
-                                        src={icon1}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Love</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon2}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Happy</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon3}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>HaHa</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon4}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Think</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon5}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Sad</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon6}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Lovely</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon7}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
+                                      <span className="material-symbols-outlined align-text-top font-size-20">
+                                        thumb_up
+                                      </span>{" "}
+                                      <span className="fw-medium">{items.likes}Likes</span>
+                                    </span>
+                                    <div className="dropdown-menu py-2 shadow">
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip>Like</Tooltip>}
+                                        className="ms-2 me-2"
+                                      >
+                                        <img
+                                          src={icon1}
+                                          className="img-fluid me-2"
+                                          alt=""
+                                        />
+                                      </OverlayTrigger>
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip>Love</Tooltip>}
+                                        className="me-2"
+                                      >
+                                        <img
+                                          src={icon2}
+                                          className="img-fluid me-2"
+                                          alt=""
+                                        />
+                                      </OverlayTrigger>
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip>Happy</Tooltip>}
+                                        className="me-2"
+                                      >
+                                        <img
+                                          src={icon3}
+                                          className="img-fluid me-2"
+                                          alt=""
+                                        />
+                                      </OverlayTrigger>
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip>HaHa</Tooltip>}
+                                        className="me-2"
+                                      >
+                                        <img
+                                          src={icon4}
+                                          className="img-fluid me-2"
+                                          alt=""
+                                        />
+                                      </OverlayTrigger>
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip>Think</Tooltip>}
+                                        className="me-2"
+                                      >
+                                        <img
+                                          src={icon5}
+                                          className="img-fluid me-2"
+                                          alt=""
+                                        />
+                                      </OverlayTrigger>
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip>Sad</Tooltip>}
+                                        className="me-2"
+                                      >
+                                        <img
+                                          src={icon6}
+                                          className="img-fluid me-2"
+                                          alt=""
+                                        />
+                                      </OverlayTrigger>
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip>Lovely</Tooltip>}
+                                        className="me-2"
+                                      >
+                                        <img
+                                          src={icon7}
+                                          className="img-fluid me-2"
+                                          alt=""
+                                        />
+                                      </OverlayTrigger>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="d-flex align-items-center gap-3 flex-shrink-0">
-                              <div
-                                className="total-comment-block"
-                                type="button"
-                                aria-controls="commentcollapes"
-                                aria-expanded={open1}
-                                onClick={() => setOpen1(!open1)}
-                              >
-                                <span className="material-symbols-outlined align-text-top font-size-20">
-                                  comment
-                                </span>{" "}
-                                <span className="fw-medium">20 Comment</span>
-                              </div>
-
-                              <div className="share-block d-flex align-items-center feather-icon">
-                                <Link
-                                  to="#"
-                                  onClick={() => setModalShow1(true)}
-                                  aria-controls="share-btn"
-                                  className="d-flex align-items-center"
+                              <div className="d-flex align-items-center gap-3 flex-shrink-0">
+                                <div
+                                  className="total-comment-block"
+                                  type="button"
+                                  aria-controls="commentcollapes"
+                                  aria-expanded={open}
+                                  onClick={() => setOpen(!open)}
                                 >
                                   <span className="material-symbols-outlined align-text-top font-size-20">
-                                    share
-                                  </span>
-                                  <span className="ms-1 fw-medium">
-                                    99 Share
-                                  </span>
-                                </Link>
-                              </div>
-                              <ShareOffcanvasNew
-                                show={modalShow1}
-                                onHide={() => setModalShow1(false)}
-                              />
-                            </div>
-                          </div>
-
-                          <Collapse in={open1} >
-                            <div id="commentcollapes" className="border-top mt-4 pt-4">
-                              <ul className="list-inline m-o p-0 comment-list">
-                                <li className="mb-3">
-                                  <div className="comment-list-block">
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="comment-list-user-img flex-shrink-0">
-                                        <img
-                                          src={user3}
-                                          alt="userimg"
-                                          className="avatar-48 rounded-circle img-fluid"
-                                          loading="lazy"
-                                        />
-                                      </div>
-                                      <div className="comment-list-user-data">
-                                        <div className="d-inline-flex align-items-center gap-1 flex-wrap">
-                                          <h6 className="m-0">Bob Frapples</h6>
-                                          <span className="d-inline-block text-primary">
-                                            <svg
-                                              className="align-text-bottom"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="17"
-                                              height="17"
-                                              viewBox="0 0 17 17"
-                                              fill="none"
-                                            >
-                                              <path
-                                                fillRule="evenodd"
-                                                clipRule="evenodd"
-                                                d="M12.2483 0.216553H4.75081C2.13805 0.216553 0.5 2.0665 0.5 4.68444V11.7487C0.5 14.3666 2.13027 16.2166 4.75081 16.2166H12.2475C14.8689 16.2166 16.5 14.3666 16.5 11.7487V4.68444C16.5 2.0665 14.8689 0.216553 12.2483 0.216553Z"
-                                                fill="currentColor"
-                                              />
-                                              <path
-                                                d="M5.5 8.21627L7.50056 10.216L11.5 6.21655"
-                                                stroke="white"
-                                                strokeWidth="1.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                              />
-                                            </svg>
-                                          </span>
-                                          <span className="fw-medium small text-capitalize">
-                                            3 min ago
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="comment-list-user-comment">
-                                      <div className="comment-list-comment">
-                                        "Just stumbled upon this post and it's
-                                        giving me all the feels! 🙌"
-                                      </div>
-                                      <div className="comment-list-action mt-2">
-                                        <ul className="list-inline m-0 p-0 d-flex align-items-center gap-2">
-                                          <li>
-                                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                                              <div className="like-data">
-                                                <div className="dropdown">
-                                                  <span
-                                                    className="dropdown-toggle"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                    role="button"
-                                                  >
-                                                    <span className="material-symbols-outlined align-text-top font-size-18">
-                                                      thumb_up
-                                                    </span>
-                                                    <span className="fw-medium small">
-                                                      Likes
-                                                    </span>
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <span
-                                              className="fw-medium small"
-                                              data-bs-toggle="collapse"
-                                              data-bs-target="#subcomment-collapse1"
-                                              role="button"
-                                              aria-expanded="false"
-                                              aria-controls="collapseExample"
-                                            >
-                                              Reply
-                                            </span>
-                                          </li>
-                                        </ul>
-                                        <div
-                                          className="add-comment-form-block collapse mt-3"
-                                          id="subcomment-collapse1"
-                                        >
-                                          <div className="d-flex align-items-center gap-3">
-                                            <div className="flex-shrink-0">
-                                              <img
-                                                src={user1}
-                                                alt="userimg"
-                                                className="avatar-48 rounded-circle img-fluid"
-                                                loading="lazy"
-                                              />
-                                            </div>
-                                            <div className="add-comment-form">
-                                              <form>
-                                                <input
-                                                  type="text"
-                                                  className="form-control"
-                                                  placeholder="Write a Comment..."
-                                                />
-                                                <button
-                                                  type="submit"
-                                                  className="btn btn-primary font-size-12 text-capitalize px-5"
-                                                >
-                                                  post
-                                                </button>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                              <div className="add-comment-form-block">
-                                <div className="d-flex align-items-center gap-3">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      src={user1}
-                                      alt="userimg"
-                                      className="avatar-48 rounded-circle img-fluid"
-                                      loading="lazy"
-                                    />
-                                  </div>
-                                  <div className="add-comment-form">
-                                    <form>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Write a Comment..."
-                                      />
-                                      <button
-                                        type="submit"
-                                        className="btn btn-primary font-size-12 text-capitalize px-5"
-                                      >
-                                        post
-                                      </button>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </Collapse>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col sm={12} className="special-post">
-                    <div className="card card-block card-stretch card-height">
-                      <div className="card-body">
-                        <div className="user-post-data">
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="me-3 flex-shrik-0">
-                              <img
-                                className="border border-2 rounded-circle user-post-profile"
-                                src={user4}
-                                alt=""
-                              />
-                            </div>
-                            <div className="w-100">
-                              <div className=" d-flex align-items-center justify-content-between">
-                                <div>
-                                  <h6 className="mb-0 d-inline-block">
-                                    Ira Membrit
-                                  </h6>{" "}
-                                  <span className="d-inline-block text-primary">
-                                    <svg
-                                      className="align-text-bottom"
-                                      width="17"
-                                      height="17"
-                                      viewBox="0 0 17 17"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M11.8457 0H4.34822C1.73547 0 0.0974121 1.84995 0.0974121 4.46789V11.5321C0.0974121 14.1501 1.72768 16 4.34822 16H11.8449C14.4663 16 16.0974 14.1501 16.0974 11.5321V4.46789C16.0974 1.84995 14.4663 0 11.8457 0Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <path
-                                        d="M5.09741 7.99978L7.09797 9.9995L11.0974 6.00006"
-                                        stroke="white"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
+                                    comment
                                   </span>{" "}
-                                  <p className="mb-0 d-inline-block text-capitalize fw-medium">
-                                    Update her Status
-                                  </p>
-                                  <p className="mb-0">
-                                    6 Hours ago
-                                  </p>
+                                  <span className="fw-medium">{items.comments}Comment</span>
                                 </div>
-                                <div className="card-post-toolbar">
-                                  <Dropdown>
-                                    <Dropdown.Toggle variant="lh-1" id="post-option" as="span" bsPrefix=" ">
-                                      <span className="material-symbols-outlined" >more_horiz</span>
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className="dropdown-menu m-0 p-0">
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            save
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Save Post</h6>
-                                            <p className="mb-0">
-                                              Add this to your saved items
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className="p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            cancel
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Hide Post</h6>
-                                            <p className="mb-0">
-                                              See fewer posts like this.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            person_remove
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Unfollow User</h6>
-                                            <p className="mb-0">
-                                              Stop seeing posts but stay
-                                              friends.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            notifications
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Notifications</h6>
-                                            <p className="mb-0">
-                                              Turn on notifications for this
-                                              post
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <p className="mb-0">
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Morbi nulla dolor, ornare at commodo non,
-                            feugiat non nisi. Phasellus faucibus mollis
-                            pharetra. Proin blandit ac massa sed rhoncus"
-                          </p>
-                        </div>
-                        <div className="post-meta-likes mt-4">
-                          <div className="d-flex align-items-center gap-2 flex-wrap">
-                            <ul className="list-inline m-0 p-0 post-user-liked-list">
-                              <li>
-                                <img
-                                  src={user01}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user2}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user3}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user4}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                            </ul>
-                            <div className="d-inline-flex align-items-center gap-1">
-                              <h6 className="m-0 font-size-14">Aliana Molex</h6>
-                              <span
-                                className="text-capitalize font-size-14 fw-medium"
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#likemodal"
-                              >
-                                and 208 others liked this
-                              </span>
-                            </div>
-                          </div>
-                        </div>
 
-                        <div className="comment-area mt-4 pt-4 border-top">
-                          <div className="d-flex justify-content-between align-items-center flex-wrap">
-                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                              <div className="like-data">
-                                <div className="dropdown">
-                                  <span
-                                    className="dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    role="button"
+                                {/* <div className="share-block d-flex align-items-center feather-icon">
+                                  <Link
+                                    to="#"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#share-btn"
+                                    onClick={() => setModalShow(true)}
+                                    aria-controls="share-btn"
+                                    className="d-flex align-items-center"
                                   >
                                     <span className="material-symbols-outlined align-text-top font-size-20">
-                                      thumb_up
-                                    </span>{" "}
-                                    <span className="fw-medium">140 Likes</span>
-                                  </span>
-                                  <div className="dropdown-menu py-2 shadow">
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Like</Tooltip>}
-                                      className="ms-2 me-2"
-                                    >
-                                      <img
-                                        src={icon1}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Love</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon2}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Happy</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon3}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>HaHa</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon4}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Think</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon5}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Sad</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon6}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Lovely</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon7}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                  </div>
-                                </div>
+                                      share
+                                    </span>
+                                    <span className="ms-1 fw-medium">
+                                      99 Share
+                                    </span>
+                                  </Link>
+                                </div> */}
+                                <ShareOffcanvasNew
+                                  show={modalShow}
+                                  onHide={() => setModalShow(false)}
+                                />
                               </div>
                             </div>
-                            <div className="d-flex align-items-center gap-3 flex-shrink-0">
-                              <div
-                                className="total-comment-block"
-                                type="button"
-                                aria-controls="commentcollapes"
-                                aria-expanded={open2}
-                                onClick={() => setOpen2(!open2)}
-                              >
-                                <span className="material-symbols-outlined align-text-top font-size-20">
-                                  comment
-                                </span>{" "}
-                                <span className="fw-medium">20 Comment</span>
-                              </div>
 
-                              <div className="share-block d-flex align-items-center feather-icon">
-                                <Link
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#share-btn"
-                                  onClick={() => setModalShow2(true)}
-                                  aria-controls="share-btn"
-                                  className="d-flex align-items-center"
-                                >
-                                  <span className="material-symbols-outlined align-text-top font-size-20">
-                                    share
-                                  </span>
-                                  <span className="ms-1 fw-medium">
-                                    99 Share
-                                  </span>
-                                </Link>
-                              </div>
-                              <ShareOffcanvasNew
-                                show={modalShow2}
-                                onHide={() => setModalShow2(false)}
-                              />
-                            </div>
-                          </div>
 
-                          <Collapse in={open2}>
-                            <div id="commentcollapes" className="border-top mt-4 pt-4">
-                              <ul className="list-inline m-o p-0 comment-list">
-                                <li className="mb-3">
-                                  <div className="comment-list-block">
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="comment-list-user-img flex-shrink-0">
-                                        <img
-                                          src={user3}
-                                          alt="userimg"
-                                          className="avatar-48 rounded-circle img-fluid"
-                                          loading="lazy"
-                                        />
-                                      </div>
-                                      <div className="comment-list-user-data">
-                                        <div className="d-inline-flex align-items-center gap-1 flex-wrap">
-                                          <h6 className="m-0">Bob Frapples</h6>
-                                          <span className="d-inline-block text-primary">
-                                            <svg
-                                              className="align-text-bottom"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="17"
-                                              height="17"
-                                              viewBox="0 0 17 17"
-                                              fill="none"
-                                            >
-                                              <path
-                                                fillRule="evenodd"
-                                                clipRule="evenodd"
-                                                d="M12.2483 0.216553H4.75081C2.13805 0.216553 0.5 2.0665 0.5 4.68444V11.7487C0.5 14.3666 2.13027 16.2166 4.75081 16.2166H12.2475C14.8689 16.2166 16.5 14.3666 16.5 11.7487V4.68444C16.5 2.0665 14.8689 0.216553 12.2483 0.216553Z"
-                                                fill="currentColor"
-                                              />
-                                              <path
-                                                d="M5.5 8.21627L7.50056 10.216L11.5 6.21655"
-                                                stroke="white"
-                                                strokeWidth="1.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                              />
-                                            </svg>
-                                          </span>
-                                          <span className="fw-medium small text-capitalize">
-                                            3 min ago
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="comment-list-user-comment">
-                                      <div className="comment-list-comment">
-                                        "Just stumbled upon this post and it's
-                                        giving me all the feels! 🙌"
-                                      </div>
-                                      <div className="comment-list-action mt-2">
-                                        <ul className="list-inline m-0 p-0 d-flex align-items-center gap-2">
-                                          <li>
-                                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                                              <div className="like-data">
-                                                <div className="dropdown">
-                                                  <span
-                                                    className="dropdown-toggle"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                    role="button"
-                                                  >
-                                                    <span className="material-symbols-outlined align-text-top font-size-18">
-                                                      thumb_up
-                                                    </span>
-                                                    <span className="fw-medium small">
-                                                      Likes
-                                                    </span>
+                            <Collapse in={open} >
+
+                              <div id="commentcollapes" className="border-top mt-4 pt-4" key={i}>
+                                {
+                                  items.comments.map((user, i) => (
+                                    <>
+                                      <ul className="list-inline m-o p-0 comment-list">
+                                        <li className="mb-3">
+                                          <div className="comment-list-block">
+                                            <div className="d-flex align-items-center gap-3">
+                                              <div className="comment-list-user-img flex-shrink-0">
+                                                <img
+                                                  src={user?.profile ? user?.profile : user6}
+                                                  alt="userimg"
+                                                  className="avatar-48 rounded-circle img-fluid"
+                                                  loading="lazy"
+                                                />
+                                              </div>
+                                              <div className="comment-list-user-data">
+                                                <div className="d-inline-flex align-items-center gap-1 flex-wrap">
+                                                  <h6 className="m-0">{user?.name}</h6>
+                                                  <span className="d-inline-block text-primary">
+                                                    <svg
+                                                      className="align-text-bottom"
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      width="17"
+                                                      height="17"
+                                                      viewBox="0 0 17 17"
+                                                      fill="none"
+                                                    >
+                                                      <path
+                                                        fillRule="evenodd"
+                                                        clipRule="evenodd"
+                                                        d="M12.2483 0.216553H4.75081C2.13805 0.216553 0.5 2.0665 0.5 4.68444V11.7487C0.5 14.3666 2.13027 16.2166 4.75081 16.2166H12.2475C14.8689 16.2166 16.5 14.3666 16.5 11.7487V4.68444C16.5 2.0665 14.8689 0.216553 12.2483 0.216553Z"
+                                                        fill="currentColor"
+                                                      />
+                                                      <path
+                                                        d="M5.5 8.21627L7.50056 10.216L11.5 6.21655"
+                                                        stroke="white"
+                                                        strokeWidth="1.5"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                      />
+                                                    </svg>
                                                   </span>
+                                                  {/* <span className="fw-medium small text-capitalize">
+                                                  3 min ago
+                                                </span> */}
                                                 </div>
                                               </div>
                                             </div>
-                                          </li>
-                                          <li>
-                                            <span
-                                              className="fw-medium small"
-                                              data-bs-toggle="collapse"
-                                              data-bs-target="#subcomment-collapse1"
-                                              role="button"
-                                              aria-expanded="false"
-                                              aria-controls="collapseExample"
-                                            >
-                                              Reply
-                                            </span>
-                                          </li>
-                                        </ul>
-                                        <div
-                                          className="add-comment-form-block collapse mt-3"
-                                          id="subcomment-collapse1"
-                                        >
-                                          <div className="d-flex align-items-center gap-3">
-                                            <div className="flex-shrink-0">
-                                              <img
-                                                src={user1}
-                                                alt="userimg"
-                                                className="avatar-48 rounded-circle img-fluid"
-                                                loading="lazy"
-                                              />
-                                            </div>
-                                            <div className="add-comment-form">
-                                              <form>
-                                                <input
-                                                  type="text"
-                                                  className="form-control"
-                                                  placeholder="Write a Comment..."
-                                                />
-                                                <button
-                                                  type="submit"
-                                                  className="btn btn-primary font-size-12 text-capitalize px-5"
+                                            <div className="comment-list-user-comment">
+                                              <div className="comment-list-comment">
+                                                {user?.comment}
+                                              </div>
+                                              <div className="comment-list-action mt-2">
+                                                <ul className="list-inline m-0 p-0 d-flex align-items-center gap-2">
+                                                  <li>
+                                                    <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
+                                                      <div className="like-data">
+                                                        <div className="dropdown">
+                                                          <span
+                                                            className="dropdown-toggle"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false"
+                                                            role="button"
+                                                          >
+                                                            <span className="material-symbols-outlined align-text-top font-size-18">
+                                                              thumb_up
+                                                            </span>{" "}
+                                                            <span className="fw-medium small">
+                                                              Likes
+                                                            </span>
+                                                          </span>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </li>
+                                                  <li>
+                                                    <span
+                                                      className="fw-medium small"
+                                                      data-bs-toggle="collapse"
+                                                      data-bs-target="#subcomment-collapse1"
+                                                      role="button"
+                                                      aria-expanded="false"
+                                                      aria-controls="collapseExample"
+                                                    >
+                                                      Reply
+                                                    </span>
+                                                  </li>
+                                                </ul>
+                                                <div
+                                                  className="add-comment-form-block collapse mt-3"
+                                                  id="subcomment-collapse1"
                                                 >
-                                                  post
-                                                </button>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                              <div className="add-comment-form-block">
-                                <div className="d-flex align-items-center gap-3">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      src={user1}
-                                      alt="userimg"
-                                      className="avatar-48 rounded-circle img-fluid"
-                                      loading="lazy"
-                                    />
-                                  </div>
-                                  <div className="add-comment-form">
-                                    <form>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Write a Comment..."
-                                      />
-                                      <button
-                                        type="submit"
-                                        className="btn btn-primary font-size-12 text-capitalize px-5"
-                                      >
-                                        post
-                                      </button>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </Collapse>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-
-                  <Col sm={12} className="special-post">
-                    <div className="card card-block card-stretch card-height">
-                      <div className="card-body">
-                        <div className="user-post-data">
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="me-3 flex-shrik-0">
-                              <img
-                                className="border border-2 rounded-circle user-post-profile"
-                                src={user1}
-                                alt=""
-                              />
-                            </div>
-                            <div className="w-100">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <h6 className="mb-0 d-inline-block">
-                                    Bni Cyst
-                                  </h6>{" "}
-                                  <span className="d-inline-block text-primary">
-                                    <svg
-                                      className="align-text-bottom"
-                                      width="17"
-                                      height="17"
-                                      viewBox="0 0 17 17"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M11.8457 0H4.34822C1.73547 0 0.0974121 1.84995 0.0974121 4.46789V11.5321C0.0974121 14.1501 1.72768 16 4.34822 16H11.8449C14.4663 16 16.0974 14.1501 16.0974 11.5321V4.46789C16.0974 1.84995 14.4663 0 11.8457 0Z"
-                                        fill="currentColor"
-                                      ></path>
-                                      <path
-                                        d="M5.09741 7.99978L7.09797 9.9995L11.0974 6.00006"
-                                        stroke="white"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>{" "}
-                                  </span>{" "}
-                                  <p className="mb-0 d-inline-block text-capitalize fw-medium">
-                                    Added New Video in his Timeline
-                                  </p>
-                                  <p className="mb-0">8 Hours ago</p>
-                                </div>
-                                <div className="card-post-toolbar">
-                                  <Dropdown>
-                                    <Dropdown.Toggle id="post-option" as="span" className="material-symbols-outlined lh-1">
-                                      more_horiz
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className="m-0 p-0">
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            save
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Save Post</h6>
-                                            <p className="mb-0">
-                                              Add this to your saved items
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className="p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            cancel
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Hide Post</h6>
-                                            <p className="mb-0">
-                                              See fewer posts like this.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            person_remove
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Unfollow User</h6>
-                                            <p className="mb-0">
-                                              Stop seeing posts but stay
-                                              friends.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                      <Dropdown.Item className=" p-3" to="#">
-                                        <div className="d-flex align-items-top">
-                                          <span className="material-symbols-outlined">
-                                            notifications
-                                          </span>
-                                          <div className="data ms-2">
-                                            <h6>Notifications</h6>
-                                            <p className="mb-0">
-                                              Turn on notifications for this
-                                              post
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <p>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus"
-                          </p>
-                        </div>
-                        <div className="user-post mt-4">
-                          <div className="ratio ratio-16x9">
-                            <iframe
-                              title="vedio"
-                              src="https://www.youtube.com/embed/j_GsIanLxZk?rel=0"
-                            ></iframe>
-                          </div>
-                        </div>
-                        <div className="post-meta-likes mt-4">
-                          <div className="d-flex align-items-center gap-2 flex-wrap">
-                            <ul className="list-inline m-0 p-0 post-user-liked-list">
-                              <li>
-                                <img
-                                  src={user01}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user2}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user3}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                              <li>
-                                <img
-                                  src={user4}
-                                  alt="userimg"
-                                  className="rounded-circle img-fluid userimg"
-                                  loading="lazy"
-                                />
-                              </li>{" "}
-                            </ul>
-                            <div className="d-inline-flex align-items-center gap-1">
-                              <h6 className="m-0 font-size-14">Aliana Molex</h6>
-                              <span
-                                className="text-capitalize font-size-14 fw-medium"
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#likemodal"
-                              >
-                                and 208 others liked this
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="comment-area mt-4 pt-4 border-top">
-                          <div className="d-flex justify-content-between align-items-center flex-wrap">
-                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                              <div className="like-data">
-                                <div className="dropdown">
-                                  <span
-                                    className="dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    role="button"
-                                  >
-                                    <span className="material-symbols-outlined align-text-top font-size-20">
-                                      thumb_up
-                                    </span>{" "}
-                                    <span className="fw-medium">140 Likes</span>
-                                  </span>
-                                  <div className="dropdown-menu py-2 shadow">
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Like</Tooltip>}
-                                      className="ms-2 me-2"
-                                    >
-                                      <img
-                                        src={icon1}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Love</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon2}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Happy</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon3}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>HaHa</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon4}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Think</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon5}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Sad</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon6}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={<Tooltip>Lovely</Tooltip>}
-                                      className="me-2"
-                                    >
-                                      <img
-                                        src={icon7}
-                                        className="img-fluid me-2"
-                                        alt=""
-                                      />
-                                    </OverlayTrigger>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="d-flex align-items-center gap-3 flex-shrink-0">
-                              <div
-                                className="total-comment-block"
-                                type="button"
-                                aria-controls="commentcollapes"
-                                aria-expanded={open3}
-                                onClick={() => setOpen3(!open3)}
-                              >
-                                <span className="material-symbols-outlined align-text-top font-size-20">
-                                  comment
-                                </span>{" "}
-                                <span className="fw-medium">20 Comment</span>
-                              </div>
-
-                              <div className="share-block d-flex align-items-center feather-icon">
-                                <Link
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#share-btn"
-                                  onClick={() => setModalShow3(true)}
-                                  aria-controls="share-btn"
-                                  className="d-flex align-items-center"
-                                >
-                                  <span className="material-symbols-outlined align-text-top font-size-20">
-                                    share
-                                  </span>
-                                  <span className="ms-1 fw-medium">
-                                    99 Share
-                                  </span>
-                                </Link>
-                              </div>
-                              <ShareOffcanvasNew
-                                show={modalShow3}
-                                onHide={() => setModalShow3(false)}
-                              />
-                            </div>
-                          </div>
-
-                          <Collapse in={open3}>
-                            <div id="commentcollapes" className="border-top mt-4 pt-4">
-                              <ul className="list-inline m-o p-0 comment-list">
-                                <li className="mb-3">
-                                  <div className="comment-list-block">
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="comment-list-user-img flex-shrink-0">
-                                        <img
-                                          src={user3}
-                                          alt="userimg"
-                                          className="avatar-48 rounded-circle img-fluid"
-                                          loading="lazy"
-                                        />
-                                      </div>
-                                      <div className="comment-list-user-data">
-                                        <div className="d-inline-flex align-items-center gap-1 flex-wrap">
-                                          <h6 className="m-0">Bob Frapples</h6>
-                                          <span className="d-inline-block text-primary">
-                                            <svg
-                                              className="align-text-bottom"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="17"
-                                              height="17"
-                                              viewBox="0 0 17 17"
-                                              fill="none"
-                                            >
-                                              <path
-                                                fillRule="evenodd"
-                                                clipRule="evenodd"
-                                                d="M12.2483 0.216553H4.75081C2.13805 0.216553 0.5 2.0665 0.5 4.68444V11.7487C0.5 14.3666 2.13027 16.2166 4.75081 16.2166H12.2475C14.8689 16.2166 16.5 14.3666 16.5 11.7487V4.68444C16.5 2.0665 14.8689 0.216553 12.2483 0.216553Z"
-                                                fill="currentColor"
-                                              />
-                                              <path
-                                                d="M5.5 8.21627L7.50056 10.216L11.5 6.21655"
-                                                stroke="white"
-                                                strokeWidth="1.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                              />
-                                            </svg>
-                                          </span>
-                                          <span className="fw-medium small text-capitalize">
-                                            3 min ago
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="comment-list-user-comment">
-                                      <div className="comment-list-comment">
-                                        "Just stumbled upon this post and it's
-                                        giving me all the feels! 🙌"
-                                      </div>
-                                      <div className="comment-list-action mt-2">
-                                        <ul className="list-inline m-0 p-0 d-flex align-items-center gap-2">
-                                          <li>
-                                            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                                              <div className="like-data">
-                                                <div className="dropdown">
-                                                  <span
-                                                    className="dropdown-toggle"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                    role="button"
-                                                  >
-                                                    <span className="material-symbols-outlined align-text-top font-size-18">
-                                                      thumb_up
-                                                    </span>
-                                                    <span className="fw-medium small">
-                                                      Likes
-                                                    </span>
-                                                  </span>
+                                                  <div className="d-flex align-items-center gap-3">
+                                                    <div className="flex-shrink-0">
+                                                      <img
+                                                        src={user1}
+                                                        alt="userimg"
+                                                        className="avatar-48 rounded-circle img-fluid"
+                                                        loading="lazy"
+                                                      />
+                                                    </div>
+                                                    <div className="add-comment-form">
+                                                      <form>
+                                                        <input
+                                                          type="text"
+                                                          className="form-control"
+                                                          placeholder="Write a Comment..."
+                                                        />
+                                                        <button
+                                                          type="submit"
+                                                          className="btn btn-primary font-size-12 text-capitalize px-5"
+                                                        >
+                                                          post
+                                                        </button>
+                                                      </form>
+                                                    </div>
+                                                  </div>
                                                 </div>
                                               </div>
                                             </div>
-                                          </li>
-                                          <li>
-                                            <span
-                                              className="fw-medium small"
-                                              data-bs-toggle="collapse"
-                                              data-bs-target="#subcomment-collapse1"
-                                              role="button"
-                                              aria-expanded="false"
-                                              aria-controls="collapseExample"
-                                            >
-                                              Reply
-                                            </span>
-                                          </li>
-                                        </ul>
-                                        <div
-                                          className="add-comment-form-block collapse mt-3"
-                                          id="subcomment-collapse1"
-                                        >
-                                          <div className="d-flex align-items-center gap-3">
-                                            <div className="flex-shrink-0">
-                                              <img
-                                                src={user1}
-                                                alt="userimg"
-                                                className="avatar-48 rounded-circle img-fluid"
-                                                loading="lazy"
+                                          </div>
+                                        </li>
+                                      </ul>
+                                      <div className="add-comment-form-block">
+                                        <div className="d-flex align-items-center gap-3">
+                                          <div className="flex-shrink-0">
+                                            <img
+                                              src={user1}
+                                              alt="userimg"
+                                              className="avatar-48 rounded-circle img-fluid"
+                                              loading="lazy"
+                                            />
+                                          </div>
+                                          <div className="add-comment-form">
+                                            <form>
+                                              <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Write a Comment..."
                                               />
-                                            </div>
-                                            <div className="add-comment-form">
-                                              <form>
-                                                <input
-                                                  type="text"
-                                                  className="form-control"
-                                                  placeholder="Write a Comment..."
-                                                />
-                                                <button
-                                                  type="submit"
-                                                  className="btn btn-primary font-size-12 text-capitalize px-5"
-                                                >
-                                                  post
-                                                </button>
-                                              </form>
-                                            </div>
+                                              <button
+                                                type="submit"
+                                                className="btn btn-primary font-size-12 text-capitalize px-5"
+                                              >
+                                                post
+                                              </button>
+                                            </form>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                              <div className="add-comment-form-block">
-                                <div className="d-flex align-items-center gap-3">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      src={user1}
-                                      alt="userimg"
-                                      className="avatar-48 rounded-circle img-fluid"
-                                      loading="lazy"
-                                    />
-                                  </div>
-                                  <div className="add-comment-form">
-                                    <form>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Write a Comment..."
-                                      />
-                                      <button
-                                        type="submit"
-                                        className="btn btn-primary font-size-12 text-capitalize px-5"
-                                      >
-                                        post
-                                      </button>
-                                    </form>
-                                  </div>
-                                </div>
+                                    </>
+
+                                  ))
+                                }
                               </div>
-                            </div>
-                          </Collapse>
-                        </div>
-                      </div>
-                    </div>
+                            </Collapse>
+
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    ))}
                   </Col>
 
-                  {loadContent ? <div className="col-sm-12 text-center">
+
+                  {/* {loadContent ? <div className="col-sm-12 text-center">
                     <img src={loader} alt="loader" style={{ height: "100px" }} />
                   </div> : <>
                     <Col sm={12} className="special-post">
@@ -3722,12 +2267,12 @@ const Index = () => {
                           </div>
                         </div>
                       </div>
-                    </Col></>}
+                    </Col></>} */}
                 </Row>
               </div>
             </Col>
 
-            <Col lg={4}>
+            {/* <Col lg={4}>
               <Card>
                 <div className="card-header d-flex justify-content-between">
                   <div className="header-title">
@@ -3981,7 +2526,7 @@ const Index = () => {
                   </Card.Body>
                 </Card>
               </div>
-            </Col>
+            </Col> */}
 
           </Row>
         </Container>

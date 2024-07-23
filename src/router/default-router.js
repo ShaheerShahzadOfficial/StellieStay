@@ -77,55 +77,57 @@ import PrivacyPolicy from "../views/dashboard/extrapages/privacy-policy";
 import TermsofService from "../views/dashboard/extrapages/terms-of-service";
 import BlankPage from "../views/dashboard/extrapages/blankpage";
 import Admin from "../views/dashboard/app/admin";
+import Protected from "../views/ProtectedRoutes/Protected";
+import { components } from "react-select";
 
 export const DefaultRouter = [
   {
-    path: "/",
-    element: <Index />,
+    path: '/',
+    element: <Protected Component={Index} />,
   },
   {
     path: "dashboard/app/profile",
-    element: <UserProfile />,
+    element: <Protected Component={UserProfile} />,
   },
   {
     path: "dashboard/app/user-privacy-setting",
-    element: <UserPrivacySetting />,
+    element: <Protected Component={UserPrivacySetting} />,
   },
   {
     path: "dashboard/app/friend-profile",
-    element: <FriendProfile />,
+    element: <Protected Component={FriendProfile} />,
   },
   {
     path: "dashboard/app/profile-badges",
-    element: <ProfileBadges />,
+    element: <Protected Component={ProfileBadges} />,
   },
   {
     path: "dashboard/app/profile-forum",
-    element: <ProfileForums />,
+    element: <Protected Component={ProfileForums} />,
   },
   {
     path: "dashboard/app/notification",
-    element: <Notification />,
+    element: <Protected Component={Notification} />,
   },
   {
     path: "dashboard/app/file",
-    element: <File />,
+    element: <Protected Component={File} />,
   },
   {
     path: "dashboard/app/friend-request",
-    element: <FriendRequest />,
+    element: <Protected Component={FriendRequest} />,
   },
   {
     path: "dashboard/app/todo",
-    element: <Todo />,
+    element: <Protected Component={Todo} />,
   },
   {
     path: "dashboard/app/user-account-setting",
-    element: <UserAccountSetting />,
+    element: <Protected Component={UserAccountSetting} />,
   },
   {
     path: "dashboard/app/user-profile-edit",
-    element: <UserProfileEdit />,
+    element: <Protected Component={UserProfileEdit} />,
   },
   {
     path: "dashboard/icon/fontawesome-5",

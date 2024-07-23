@@ -1,7 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import settingReducer from './setting/reducers';
+import settingReducer, { getPost } from './setting/reducers';
+import { userReducer } from './setting/reducers';
 export const store = configureStore({
   reducer: {
-    setting: settingReducer
+    setting: settingReducer,
+    user:userReducer,
+    data:getPost
   }
+
 });

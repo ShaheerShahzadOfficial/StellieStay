@@ -45,11 +45,11 @@ const SettingOffCanvas = memo((props) => {
     })
     return (
         <Fragment>
-            <div className="btn btn-fixed-end btn-danger btn-icon btn-setting" onClick={(e) => {e.stopPropagation();setShow(true)}} >
-            <span className="icon material-symbols-outlined animated-rotate text-white">
-          settings
-      </span>
-            </div>
+            {/* <div className="btn btn-fixed-end btn-danger btn-icon btn-setting" onClick={(e) => {e.stopPropagation();setShow(true)}} > */}
+            {/* <span className="icon material-symbols-outlined animated-rotate text-white"> */}
+          {/* settings */}
+      {/* </span> */}
+            {/* </div> */}
 
             <Offcanvas show={show} onHide={() => setShow(false)} placement={`${themeSchemeDirection === "rtl" ? 'start' : 'end'}`} backdrop={false} scroll={true} className="live-customizer">
                 <Offcanvas.Header closeButton className="pb-0">

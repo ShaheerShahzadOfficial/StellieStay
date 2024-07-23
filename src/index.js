@@ -4,7 +4,7 @@ import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
 //router
-import {  createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {  BrowserRouter, createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 //store
 
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
   ...ChatRouter
 ], { basename: process.env.PUBLIC_URL })
 ReactDOM.createRoot(document.getElementById('root')).render(
+//  <BrowserRouter>
   <StrictMode>
     <Provider store={store}>
     <App>
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </App>
     </Provider>
   </StrictMode>
+//  </BrowserRouter>
 )
 // ReactDOM.render(
 //   <React.StrictMode>

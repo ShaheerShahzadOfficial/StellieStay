@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,14 +16,41 @@ import login3 from "../../../assets/images/login/3.jpg";
 // Import selectors & action from setting store
 import * as SettingSelector from "../../../store/setting/selectors";
 // Redux Selector / Action
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import logo from '../../../assets/logo/logo.png'
+import { register } from "../../../store/setting/reducers";
 
 // install Swiper modules
 SwiperCore.use([Navigation, Autoplay]);
 
 const SignUp = () => {
   const appName = useSelector(SettingSelector.app_name);
+  const { loading, error } = useSelector((state) => state.user)
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch()
+  let navigate = useNavigate()
+  const handleRegister = (e) => {
+    e.preventDefault();
+    let userCredentials = {
+      email, password, name
+    }
+    dispatch(register(userCredentials)).then((result) => {
+      if (result.payload) {
+        setEmail('');
+        setPassword('');
+        setName('');
+        navigate("/auth/sign-in");
+      } else if (result.error) {
+        console.log(result.error.message);
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+  }    
+
+
 
   return (
     <>
@@ -126,14 +153,16 @@ const SignUp = () => {
                   Welcome to socialV, a platform to connect with
                   <br /> the social world
                 </p>
-                <Form className="mt-5">
+                <Form className="mt-5" onSubmit={handleRegister}>
                   <Form.Group className="form-group text-start">
                     <h6 className="form-label fw-bold">Your Full Name</h6>
                     <Form.Control
-                      type="email"
+                      type="text"
                       className="form-control mb-0"
                       placeholder="Your Full Name"
                       defaultValue="marvin shaw"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="form-group text-start">
@@ -142,6 +171,8 @@ const SignUp = () => {
                       type="email"
                       className="form-control mb-0"
                       placeholder="marvin@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="form-group text-start">
@@ -151,6 +182,8 @@ const SignUp = () => {
                       className="form-control mb-0"
                       placeholder="Password"
                       defaultValue="marvin"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </Form.Group>
                   <div className="d-flex align-items-center justify-content-between">
@@ -170,13 +203,27 @@ const SignUp = () => {
                       </h6>
                     </Form.Check>
                   </div>
-                  <Button
+                  {/* <Button
                     variant="primary"
-                    type="button"
+                    type="submit"
                     className="btn btn-primary mt-4 fw-semibold text-uppercase w-100"
+
                   >
                     Sign Up
-                  </Button>
+                  </Button> */}
+                  <button
+                    variant="primary"
+                    type="submit"
+                    className="btn btn-primary mt-4 fw-semibold text-uppercase w-100"
+                  >
+                    {loading ? "Sign up..." : "Sign up"}
+                  </button>
+                  {error && (
+                    <div className="alert alert-danger mt-2" role="alert" >
+                      {error}
+                    </div>
+                  )
+                  }
                   <h6 className="mt-5">
                     Already Have An Account ?{" "}
                     <Link to={"/auth/sign-in"}>Login</Link>
