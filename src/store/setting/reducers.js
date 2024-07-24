@@ -342,7 +342,7 @@ export const fetchDataAsync = createAsyncThunk(
   async (apiUrl, thunkAPI) => {
     let response
     await axios.get(apiUrl).then((res) => {
-      console.log(res);
+      console.log(res,"getting data");
       response = res.data.post;
     }).catch((error) => {
       return thunkAPI.rejectWithValue(error.message);
@@ -364,9 +364,6 @@ export const comments = createAsyncThunk(
   }
 );
 
-
-
-
 const dataSlice = createSlice({
   name: "data",
   initialState: {
@@ -374,6 +371,7 @@ const dataSlice = createSlice({
     loading: false,
     error: null,
   },
+  // reducers: {}, // No synchronous actions defined here
   extraReducers: (builder) => {
     builder
       .addCase(fetchDataAsync.pending, (state) => {
@@ -383,26 +381,26 @@ const dataSlice = createSlice({
       .addCase(fetchDataAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.error = null;
       })
       .addCase(fetchDataAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       })
-      .addCase(comments.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(comments.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
-      })
-      .addCase(comments.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+      // .addCase(comments.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(comments.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.data = action.payload;
+      //   state.error = null;
+      // })
+      // .addCase(comments.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.error.message;
+      // });
   }
-})
-export const selectData = (state) => state.data
+});
+export const selectData = (state) => state.data;
 export const getPost = dataSlice.reducer;
-
-// console.log(selectData, "saaaaaaa");

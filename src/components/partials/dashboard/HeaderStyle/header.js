@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Nav, Form, Card, Container, Image, Dropdown, Navbar } from "react-bootstrap";
+import { Nav, Form, Card, Container, Image, Dropdown, Navbar, Modal, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 //image
@@ -26,7 +26,57 @@ const Header = () => {
   const appName = useSelector(SettingSelector.app_name);
 
   const [active, setActive] = useState("home");
+  const [show, setShow] = useState(false);
+  const [hotelName, setHotelName] = useState('');
+  const [creditCard, setCreditCard] = useState(false);
+  const [wifi, setWifi] = useState(false);
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [address, setAddress] = useState('');
+  const [hotelDesc, setHotelDesc] = useState('');
+  const [images, setImages] = useState([]);
 
+  const handleImageChange = (e) => {
+    for (let index = 0; index < e.target.files.length; index++) {
+      const file = e.target.files[index];
+      const Reader = new FileReader();
+      Reader.readAsDataURL(file);
+
+      Reader.onload = () => {
+        if (Reader.readyState === 2) {
+          setFile((pre) => [
+            ...pre,
+            Reader.result,
+          ]);
+        }
+      };
+    }
+  };
+
+  const handleUpload = () => {
+    if (file && caption) {
+      const formData = {
+        Address:address,
+        city:city,
+        Country:country,
+        HotelDescription:des,
+        HotelName,
+        CreditCard,
+        Wifi,
+        Size,
+        HotelImages,
+      };
+
+      dispatch(uploadContentAsync({
+        caption, file,
+
+      }));
+    }
+  };
+
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const minisidebar = () => {
     const sidebarMini = document.getElementsByTagName("ASIDE")[0];
     if (sidebarMini.classList.contains('sidebar-mini')) {
@@ -75,7 +125,7 @@ const Header = () => {
                     fill="currentColor"
                   />
                 </svg> */}
-                <img src={logo} alt="Logo" width={50}/>
+                <img src={logo} alt="Logo" width={50} />
                 <h3
                   className="logo-title d-none d-sm-block"
                   data-setting="app_name"
@@ -372,6 +422,18 @@ const Header = () => {
                   className="dropdown-toggle d-flex align-items-center"
                   id="group-drop"
                 >
+                  <i class="material-symbols-outlined" onClick={handleShow}>
+                    add_circle
+                  </i>
+                </Dropdown.Toggle>
+
+              </Dropdown>
+              <Dropdown className="nav-item " as="li">
+                <Dropdown.Toggle as="a" bsPrefix=" "
+                  to="#"
+                  className="dropdown-toggle d-flex align-items-center"
+                  id="group-drop"
+                >
                   <span className="material-symbols-outlined">group</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu
@@ -536,7 +598,63 @@ const Header = () => {
                   </div>
                 </Dropdown.Menu>
               </Dropdown>
-
+              <Modal
+                show={show}
+                onHide={handleClose}
+                centered
+                id="custom-post-modal"
+              >
+                <div style={{ padding: "20px" }}>
+                  <h2 style={{ textAlign: "center" }}>Add Acomudation</h2>
+                  <Form onSubmit={handleUpload}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Hotel Images</Form.Label>
+                      <Form.Control type="file" onChange={handleImageChange} multiple accept="image/*" />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Label>Hotel Name</Form.Label>
+                      <Form.Control type="text" placeholder="Enter Hotel Name" value={hotelName} onChange={(e) => setHotelName(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicHotelDescription">
+                      <Form.Label>HotelDescription</Form.Label>
+                      <Form.Control as="textarea" rows={3} placeholder="Kindly Hotel Description" value={hotelDesc} onChange={(e) => setHotelDesc(e.target.value)} />
+                    </Form.Group>
+                    <Row>
+                      <Col>
+                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                          <Form.Check type="checkbox" label="Credit Card" checked={creditCard} onChange={(e) => setCreditCard(e.target.checked)} />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                          <Form.Check type="checkbox" label="Wifi" checked={wifi} onChange={(e) => setWifi(e.target.checked)} />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>City</Form.Label>
+                          <Form.Control type="text" placeholder="Enter City Name" value={city} onChange={(e) => setCity(e.target.value)} />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>Country</Form.Label>
+                          <Form.Control type="text" placeholder="Enter Country Name" value={country} onChange={(e) => setCountry(e.target.value)} />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Form.Group controlId="formBasicAddress">
+                      <Form.Label>Address</Form.Label>
+                      <Form.Control as="textarea" rows={3} placeholder="Kindly Provide Address" value={address} onChange={(e) => setAddress(e.target.value)} />
+                    </Form.Group>
+                    <Button variant="primary" type="submit" style={{ width: '100%' }}>
+                      Submit
+                    </Button>
+                  </Form>
+                </div>
+              </Modal>
               <Dropdown as="li" className="nav-item">
                 <Dropdown.Toggle as="a"
                   to="#"

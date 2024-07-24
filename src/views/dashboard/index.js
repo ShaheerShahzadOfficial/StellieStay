@@ -59,7 +59,7 @@ import ReactFsLightbox from "fslightbox-react";
 // Share-offcanvas
 import ShareOffcanvasNew from "../../components/ShareOffcanvasNew";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataAsync, selectData } from "../../store/setting/reducers";
+import { comments, fetchDataAsync, selectData } from "../../store/setting/reducers";
 
 const FsLightbox = ReactFsLightbox.default
   ? ReactFsLightbox.default
@@ -83,7 +83,7 @@ const Index = () => {
   const [modalShow5, setModalShow5] = useState(false);
 
   const [loadContent, setLoadContent] = useState(true);
-
+  const [userComment, setComment] = useState('')
   const [imageController, setImageController] = useState({
     toggler: false,
     slide: 1,
@@ -282,6 +282,10 @@ const Index = () => {
   useEffect(() => {
     dispatch(fetchDataAsync(`${ApiLink}/post/getPost`)); // Replace with your API endpoint
   }, [dispatch]);
+  const handleComment = (e) => {
+
+    dispatch(comments(`${ApiLink}/post/add-comment/:postId`)); // Replace with your API endpoint
+  }
 
   return (
     <>
