@@ -24,6 +24,7 @@ function App({ children }) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadUser())
+    console.log("loadUser",'Api Called')
   }, [dispatch])
   dispatch(setSetting())
 
