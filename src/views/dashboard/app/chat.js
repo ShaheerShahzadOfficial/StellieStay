@@ -31,13 +31,13 @@ const Chat = () => {
 
 
 
-  useEffect(() => {
-    (async ()=>{
-       axios.get(`${ApiLink}/chat//get-chat-room`).then((res)=>{
+  // useEffect(() => {
+  //   (async ()=>{
+  //      axios.get(`${ApiLink}/chat//get-chat-room`).then((res)=>{
         
-       })
-    })()
-  }, []);
+  //      })
+  //   })()
+  // }, []);
 
 
   const contact = [
