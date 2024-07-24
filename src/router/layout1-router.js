@@ -96,7 +96,7 @@ export const Layout1Router = [
     element: <Market1 />,
   },
   {
-    path: "dashboards/hotel-detail",
+    path: "dashboards/hotel-detail/:id",
     element: <HotelDetail />,
   },
   {

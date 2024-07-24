@@ -17,7 +17,7 @@ import _ from "lodash";
 import axios from "axios";
 import { error } from "jquery";
 const DefaultSetting = defaultState.setting;
-export const ApiLink = "https://stellie-stay-backend.vercel.app"
+export const ApiLink = "https://stellie-stay-backend.vercel.app";
 const Choices = {
   SchemeChoice: DefaultSetting.theme_scheme.choices,
   ColorChoice: DefaultSetting.theme_color.choices,
@@ -175,30 +175,34 @@ export const settingSlice = createSlice({
 export default settingSlice.reducer;
 
 export const loginUser = createAsyncThunk(
-  '/auth/sign-in',
+  "/auth/sign-in",
   async (userCredentials) => {
     console.log(userCredentials);
     let response;
-    const request = await axios.post(`${ApiLink}/user/login`, userCredentials)
+    const request = await axios
+      .post(`${ApiLink}/user/login`, userCredentials)
       .then(async (request) => {
         console.log(request);
         response = await request.data;
-        localStorage.setItem("user", JSON.stringify(response))
-      }).catch((error) => {
-        response = error.response.data || error
-        // return response
+        localStorage.setItem("user", JSON.stringify(response));
       })
-    console.log(response)
-    return response
-
+      .catch((error) => {
+        response = error.response.data || error;
+        // return response
+      });
+    console.log(response);
+    return response;
   }
-)
+);
 export const register = createAsyncThunk(
-  '/auth/sign-up',
+  "/auth/sign-up",
   async (userCredentials, thunkAPI) => {
     try {
       // console.log(userCredentials)
-      const response = await axios.post(`${ApiLink}/user/register`, userCredentials);
+      const response = await axios.post(
+        `${ApiLink}/user/register`,
+        userCredentials
+      );
       // console.log(response);
       return response.data; // Assuming the response contains user data
     } catch (error) {
@@ -206,55 +210,51 @@ export const register = createAsyncThunk(
     }
   }
 );
-export const loadUser = createAsyncThunk(
-  "load-user",
-  async () => {
-    const token = JSON.parse(localStorage.getItem("user"))?.token;
-    try {
-      const response = await axios.get(`${ApiLink}/user/loadUser`, { headers: { Authorization: "Bearer " + token } });
-      console.log("API call successful:", response.data); 
-      return response.data;
-    }
-    catch (error) {
-      console.error("API call failed:", error); // Log the error
-      throw error;
-    }
+export const loadUser = createAsyncThunk("load-user", async () => {
+  const token = JSON.parse(localStorage.getItem("user"))?.token;
+  try {
+    const response = await axios.get(`${ApiLink}/user/loadUser`, {
+      headers: { Authorization: "Bearer " + token },
+    });
+    console.log("API call successful:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("API call failed:", error); // Log the error
+    throw error;
   }
-);
+});
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: false,
     user: null,
-    error: null
+    error: null,
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.user = null;
-        state.isAuthenticated = true
-        state.error = false
+        state.isAuthenticated = true;
+        state.error = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.isAuthenticated = true
+        state.isAuthenticated = true;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
-        state.isAuthenticated = false
+        state.isAuthenticated = false;
         if (action.error.message === "request failed with status code 491") {
-          state.error = 'Access denied! invalid credentials'
+          state.error = "Access denied! invalid credentials";
+        } else {
+          state.error = action.error;
         }
-        else {
-          state.error = action.error
-        }
-      }
-      )
+      })
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -268,7 +268,7 @@ const userSlice = createSlice({
       })
       // Reducer for sign-up failure state
       .addCase(register.rejected, (state, action) => {
-        console.log(action.payload.message, 'state.error')
+        console.log(action.payload.message, "state.error");
         state.loading = false;
         state.isAuthenticated = false;
         state.error = action.payload.message; // Assuming error message is in payload
@@ -286,31 +286,36 @@ const userSlice = createSlice({
       })
       // Reducer for sign-up failure state
       .addCase(loadUser.rejected, (state, action) => {
-        console.log(action.payload.message, 'state.error')
+        console.log(action.payload?.message, "state.error");
         state.loading = false;
         state.isAuthenticated = false;
-        state.error = action.payload.message; // Assuming error message is in payload
+        state.error = action.payload?.message; // Assuming error message is in payload
       });
-  }
-})
+  },
+});
 
 export const userReducer = userSlice.reducer;
-//uploading images 
+//uploading images
 
 export const uploadContent = async (formData) => {
-  let response
+  let response;
 
   const token = JSON.parse(localStorage.getItem("user"))?.token;
-  await axios.post(`${ApiLink}/post/createPost`, formData, { headers: { Authorization: "Bearer " + token } }).then((res) => {
-    console.log("api post data", response)
-    response = res.data;
-  }).catch((error) => {
-    console.log(error);
-    response = error.response?.data || error
-  })
+  await axios
+    .post(`${ApiLink}/post/createPost`, formData, {
+      headers: { Authorization: "Bearer " + token },
+    })
+    .then((res) => {
+      console.log("api post data", response);
+      response = res.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      response = error.response?.data || error;
+    });
   console.log(response);
-  return response
-}
+  return response;
+};
 const initialStates = {
   uploading: false,
   uploaded: false,
@@ -318,7 +323,7 @@ const initialStates = {
 };
 
 const uploadSlice = createSlice({
-  name: 'upload',
+  name: "upload",
   initialStates,
   reducers: {
     uploadContentStart: (state) => {
@@ -339,7 +344,11 @@ const uploadSlice = createSlice({
   },
 });
 
-export const { uploadContentStart, uploadContentSuccess, uploadContentFailure } = uploadSlice.actions;
+export const {
+  uploadContentStart,
+  uploadContentSuccess,
+  uploadContentFailure,
+} = uploadSlice.actions;
 
 export const uploadContentAsync = (formData) => async (dispatch) => {
   try {
@@ -356,29 +365,35 @@ export const uploadContentAsync = (formData) => async (dispatch) => {
 export const upload = uploadSlice.reducer;
 
 export const fetchDataAsync = createAsyncThunk(
-  'data/fetchData',
+  "data/fetchData",
   async (apiUrl, thunkAPI) => {
-    let response
-    await axios.get(apiUrl).then((res) => {
-      console.log(res,"getting data");
-      response = res.data.post;
-    }).catch((error) => {
-      return thunkAPI.rejectWithValue(error.message);
-    })
-    return response
+    let response;
+    await axios
+      .get(apiUrl)
+      .then((res) => {
+        console.log(res, "getting data");
+        response = res.data.post;
+      })
+      .catch((error) => {
+        return thunkAPI.rejectWithValue(error.message);
+      });
+    return response;
   }
 );
 export const comments = createAsyncThunk(
-  'data/fetchData',
+  "data/fetchData",
   async (apiUrl, thunkAPI) => {
-    let response
-    await axios.put(apiUrl).then((res) => {
-      console.log(res);
-      response = res.data;
-    }).catch((error) => {
-      return thunkAPI.rejectWithValue(error.message);
-    })
-    return response
+    let response;
+    await axios
+      .put(apiUrl)
+      .then((res) => {
+        console.log(res);
+        response = res.data;
+      })
+      .catch((error) => {
+        return thunkAPI.rejectWithValue(error.message);
+      });
+    return response;
   }
 );
 
@@ -404,20 +419,96 @@ const dataSlice = createSlice({
       .addCase(fetchDataAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      })
-      // .addCase(comments.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
-      // .addCase(comments.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.data = action.payload;
-      // })
-      // .addCase(comments.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload;
-      // });
-  }
+      });
+    // .addCase(comments.pending, (state) => {
+    //   state.loading = true;
+    //   state.error = null;
+    // })
+    // .addCase(comments.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.data = action.payload;
+    // })
+    // .addCase(comments.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    // });
+  },
 });
 export const selectData = (state) => state.data;
 export const getPost = dataSlice.reducer;
+
+export const add_Accomudation_Async = createAsyncThunk(
+  "Accomudation/add",
+  async (formData, thunkAPI) => {
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+    let response;
+    await axios
+      .post(`${ApiLink}/hotel/add-Accomudation`, formData, {
+        headers: { Authorization: "Bearer " + token },
+      })
+      .then((res) => {
+        console.log(res, "add data");
+        response = res.data.post;
+      })
+      .catch((error) => {
+        console.log(error);
+        return thunkAPI.rejectWithValue(error.message);
+      });
+    return response;
+  }
+);
+
+export const get_Accomudation_Async = createAsyncThunk(
+  "Accomudation/get",
+  async (thunkAPI) => {
+    let response;
+    await axios
+      .get(`${ApiLink}/hotel/getAccomudation`)
+      .then((res) => {
+        console.log(res, "getting data");
+        response = res.data.accomudation;
+      })
+      .catch((error) => {
+        return thunkAPI.rejectWithValue(error.message);
+      });
+    return response;
+  }
+);
+
+const AccomudationSlice = createSlice({
+  name: "Accomudation",
+  initialState: {
+    data: null,
+    loading: false,
+    error: null,
+    uploading: false,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(add_Accomudation_Async.pending, (state, action) => {
+        state.uploading = true;
+      })
+      .addCase(add_Accomudation_Async.fulfilled, (state, action) => {
+        state.uploading = false;
+      })
+      .addCase(add_Accomudation_Async.rejected, (state, action) => {
+        state.uploading = false;
+        state.error = action.payload;
+      })
+      .addCase(get_Accomudation_Async.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(get_Accomudation_Async.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(get_Accomudation_Async.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+
+export const AccomudationState = (state) => state.Accomudation;
+export const AccomudationSlices = AccomudationSlice.reducer;

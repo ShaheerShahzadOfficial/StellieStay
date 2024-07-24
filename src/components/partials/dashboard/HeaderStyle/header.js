@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { Nav, Form, Card, Container, Image, Dropdown, Navbar, Modal, Button, Row, Col } from "react-bootstrap";
+import {
+  Nav,
+  Form,
+  Card,
+  Container,
+  Image,
+  Dropdown,
+  Navbar,
+  Modal,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 //image
@@ -19,22 +31,25 @@ import * as SettingSelector from "../../../../store/setting/selectors";
 import logo from "../../../../assets/logo/logo.png";
 
 // Redux Selector / Action
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SearchModal from "../../../search-modal";
+import { add_Accomudation_Async } from "../../../../store/setting/reducers";
 
 const Header = () => {
   const appName = useSelector(SettingSelector.app_name);
+  const dispatch = useDispatch();
 
   const [active, setActive] = useState("home");
   const [show, setShow] = useState(false);
-  const [hotelName, setHotelName] = useState('');
+  const [hotelName, setHotelName] = useState("");
   const [creditCard, setCreditCard] = useState(false);
   const [wifi, setWifi] = useState(false);
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('');
-  const [address, setAddress] = useState('');
-  const [hotelDesc, setHotelDesc] = useState('');
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
+  const [hotelDesc, setHotelDesc] = useState("");
   const [images, setImages] = useState([]);
+  const [size, setSize] = useState();
 
   const handleImageChange = (e) => {
     for (let index = 0; index < e.target.files.length; index++) {
@@ -44,46 +59,40 @@ const Header = () => {
 
       Reader.onload = () => {
         if (Reader.readyState === 2) {
-          setFile((pre) => [
-            ...pre,
-            Reader.result,
-          ]);
+          setImages((pre) => [...pre, Reader.result]);
         }
       };
     }
   };
 
-  const handleUpload = () => {
-    if (file && caption) {
+  const handleUpload = (e) => {
+    e.preventDefault();
+    console.log("handleUpload")
+    if (images) {
       const formData = {
-        Address:address,
-        city:city,
-        Country:country,
-        HotelDescription:des,
-        HotelName,
-        CreditCard,
-        Wifi,
-        Size,
-        HotelImages,
+        Address: address,
+        city: city,
+        Country: country,
+        HotelDescription: hotelDesc,
+        HotelName: hotelName,
+        CreditCard: creditCard,
+        Wifi: wifi,
+        Size: size,
+        HotelImages: images,
       };
 
-      dispatch(uploadContentAsync({
-        caption, file,
-
-      }));
+      dispatch(add_Accomudation_Async(formData));
     }
   };
-
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const minisidebar = () => {
     const sidebarMini = document.getElementsByTagName("ASIDE")[0];
-    if (sidebarMini.classList.contains('sidebar-mini')) {
-      sidebarMini.classList.remove('sidebar-mini')
-    }
-    else {
-      sidebarMini.classList.add('sidebar-mini')
+    if (sidebarMini.classList.contains("sidebar-mini")) {
+      sidebarMini.classList.remove("sidebar-mini");
+    } else {
+      sidebarMini.classList.add("sidebar-mini");
     }
   };
 
@@ -245,17 +254,40 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              <Dropdown bsPrefix=" "
+              <Dropdown
+                bsPrefix=" "
                 className="iq-search-bar device-search position-relative d-none d-lg-block"
               >
-                <Dropdown.Toggle as="form" bsPrefix=" "
+                <Dropdown.Toggle
+                  as="form"
+                  bsPrefix=" "
                   action="#"
                   className="searchbox open-modal-search"
                 >
                   <Link className="search-link" to="#">
-                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="7.82491" cy="7.82495" r="6.74142" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></circle>
-                      <path d="M12.5137 12.8638L15.1567 15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                    <svg
+                      width="16"
+                      height="17"
+                      viewBox="0 0 16 17"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="7.82491"
+                        cy="7.82495"
+                        r="6.74142"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      ></circle>
+                      <path
+                        d="M12.5137 12.8638L15.1567 15.5"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      ></path>
                     </svg>
                   </Link>
                   <Form.Control
@@ -263,10 +295,7 @@ const Header = () => {
                     className="text search-input form-control bg-light-subtle"
                     placeholder="Search for people or groups..."
                   />
-                  <Link
-                    className="d-lg-none d-flex d-none d-lg-block"
-                    to="/"
-                  >
+                  <Link className="d-lg-none d-flex d-none d-lg-block" to="/">
                     <span className="material-symbols-outlined">search12</span>
                   </Link>
                 </Dropdown.Toggle>
@@ -400,9 +429,29 @@ const Header = () => {
                     className="searchbo open-modal-search"
                   >
                     <Link className="d-lg-none d-flex text-body" to="#">
-                      <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="7.82491" cy="7.82495" r="6.74142" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></circle>
-                        <path d="M12.5137 12.8638L15.1567 15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                      <svg
+                        width="16"
+                        height="17"
+                        viewBox="0 0 16 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="7.82491"
+                          cy="7.82495"
+                          r="6.74142"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></circle>
+                        <path
+                          d="M12.5137 12.8638L15.1567 15.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></path>
                       </svg>
                     </Link>
                     <Form.Control
@@ -410,14 +459,15 @@ const Header = () => {
                       className="text search-input form-control bg-soft-primary  d-none d-lg-block"
                       placeholder="Search here..."
                     />
-
                   </Dropdown.Toggle>
                   <SearchModal />
                 </Dropdown>
               </Nav.Item>
 
               <Dropdown className="nav-item " as="li">
-                <Dropdown.Toggle as="a" bsPrefix=" "
+                <Dropdown.Toggle
+                  as="a"
+                  bsPrefix=" "
                   to="#"
                   className="dropdown-toggle d-flex align-items-center"
                   id="group-drop"
@@ -426,10 +476,11 @@ const Header = () => {
                     add_circle
                   </i>
                 </Dropdown.Toggle>
-
               </Dropdown>
               <Dropdown className="nav-item " as="li">
-                <Dropdown.Toggle as="a" bsPrefix=" "
+                <Dropdown.Toggle
+                  as="a"
+                  bsPrefix=" "
                   to="#"
                   className="dropdown-toggle d-flex align-items-center"
                   id="group-drop"
@@ -609,54 +660,126 @@ const Header = () => {
                   <Form onSubmit={handleUpload}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Hotel Images</Form.Label>
-                      <Form.Control type="file" onChange={handleImageChange} multiple accept="image/*" />
+                      <Form.Control
+                        type="file"
+                        onChange={handleImageChange}
+                        multiple
+                        accept="image/*"
+                      />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                       <Form.Label>Hotel Name</Form.Label>
-                      <Form.Control type="text" placeholder="Enter Hotel Name" value={hotelName} onChange={(e) => setHotelName(e.target.value)} />
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Hotel Name"
+                        value={hotelName}
+                        onChange={(e) => setHotelName(e.target.value)}
+                      />
                     </Form.Group>
-                    <Form.Group controlId="formBasicHotelDescription">
+                    <Form.Group
+                      className="mb-3"
+                      controlId="formBasicHotelDescription"
+                    >
                       <Form.Label>HotelDescription</Form.Label>
-                      <Form.Control as="textarea" rows={3} placeholder="Kindly Hotel Description" value={hotelDesc} onChange={(e) => setHotelDesc(e.target.value)} />
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        placeholder="Hotel Description"
+                        value={hotelDesc}
+                        onChange={(e) => setHotelDesc(e.target.value)}
+                      />
                     </Form.Group>
                     <Row>
                       <Col>
-                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                          <Form.Check type="checkbox" label="Credit Card" checked={creditCard} onChange={(e) => setCreditCard(e.target.checked)} />
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicCheckbox"
+                        >
+                          <Form.Check
+                            type="checkbox"
+                            label="Credit Card"
+                            checked={creditCard}
+                            onChange={(e) => setCreditCard(e.target.checked)}
+                          />
                         </Form.Group>
                       </Col>
                       <Col>
-                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                          <Form.Check type="checkbox" label="Wifi" checked={wifi} onChange={(e) => setWifi(e.target.checked)} />
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicCheckbox"
+                        >
+                          <Form.Check
+                            type="checkbox"
+                            label="Wifi"
+                            checked={wifi}
+                            onChange={(e) => setWifi(e.target.checked)}
+                          />
                         </Form.Group>
                       </Col>
                     </Row>
                     <Row>
                       <Col>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicPassword"
+                        >
                           <Form.Label>City</Form.Label>
-                          <Form.Control type="text" placeholder="Enter City Name" value={city} onChange={(e) => setCity(e.target.value)} />
+                          <Form.Control
+                            type="text"
+                            placeholder="Enter City Name"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                          />
                         </Form.Group>
                       </Col>
                       <Col>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicPassword"
+                        >
                           <Form.Label>Country</Form.Label>
-                          <Form.Control type="text" placeholder="Enter Country Name" value={country} onChange={(e) => setCountry(e.target.value)} />
+                          <Form.Control
+                            type="text"
+                            placeholder="Enter Country Name"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                          />
                         </Form.Group>
                       </Col>
                     </Row>
-                    <Form.Group controlId="formBasicAddress">
-                      <Form.Label>Address</Form.Label>
-                      <Form.Control as="textarea" rows={3} placeholder="Kindly Provide Address" value={address} onChange={(e) => setAddress(e.target.value)} />
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Label>Size</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Room Size In SQR"
+                        value={size}
+                        onChange={(e) => setSize(e.target.value)}
+                      />
                     </Form.Group>
-                    <Button variant="primary" type="submit" style={{ width: '100%' }}>
+
+                    <Form.Group className="mb-3" controlId="formBasicAddress">
+                      <Form.Label>Address</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        placeholder="Provide Address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      style={{ width: "100%" }}
+                    >
                       Submit
                     </Button>
                   </Form>
                 </div>
               </Modal>
               <Dropdown as="li" className="nav-item">
-                <Dropdown.Toggle as="a"
+                <Dropdown.Toggle
+                  as="a"
                   to="#"
                   className=" d-flex align-items-center"
                   id="mail-drop"
@@ -867,7 +990,8 @@ const Header = () => {
               </Dropdown>
 
               <Dropdown as="li" className="nav-item">
-                <Dropdown.Toggle as="a"
+                <Dropdown.Toggle
+                  as="a"
                   className="search-toggle d-flex align-items-center"
                   id="notification-drop"
                 >
@@ -986,7 +1110,8 @@ const Header = () => {
                 </Link>
               </Nav.Item>
               <Dropdown as="li" className="nav-item user-dropdown">
-                <Dropdown.Toggle as="a"
+                <Dropdown.Toggle
+                  as="a"
                   to="#"
                   className="d-flex align-items-center"
                   id="drop-down-arrow"
@@ -998,9 +1123,7 @@ const Header = () => {
                     loading="lazy"
                   />
                 </Dropdown.Toggle>
-                <Dropdown.Menu
-                  className={`sub-drop caption-menu `}
-                >
+                <Dropdown.Menu className={`sub-drop caption-menu `}>
                   <Card className="shadow-none m-0">
                     <Card.Header>
                       <div className="header-title">
@@ -1013,10 +1136,7 @@ const Header = () => {
                           line_style
                         </span>
                         <div className="ms-3">
-                          <Link
-                            to="/dashboard/app/profile"
-                            className="mb-0 h6"
-                          >
+                          <Link to="/dashboard/app/profile" className="mb-0 h6">
                             My Profile
                           </Link>
                         </div>
@@ -1026,7 +1146,10 @@ const Header = () => {
                           edit_note
                         </span>
                         <div className="ms-3">
-                          <Link to="/dashboard/app/user-profile-edit" className="mb-0 h6">
+                          <Link
+                            to="/dashboard/app/user-profile-edit"
+                            className="mb-0 h6"
+                          >
                             Edit Profile
                           </Link>
                         </div>
@@ -1045,9 +1168,7 @@ const Header = () => {
                         </div>
                       </div>
                       <div className="d-flex align-items-center iq-sub-card border-0">
-                        <span className="material-symbols-outlined">
-                          lock
-                        </span>
+                        <span className="material-symbols-outlined">lock</span>
                         <div className="ms-3">
                           <Link
                             to="/dashboard/app/user-privacy-setting"
@@ -1058,9 +1179,7 @@ const Header = () => {
                         </div>
                       </div>
                       <div className="d-flex align-items-center iq-sub-card">
-                        <span className="material-symbols-outlined">
-                          login
-                        </span>
+                        <span className="material-symbols-outlined">login</span>
                         <div className="ms-3">
                           <Link to="/auth/sign-in" className="mb-0 h6">
                             Sign out
@@ -1102,7 +1221,7 @@ const Header = () => {
           </Container>
           {/* </Navbar> */}
         </Navbar>
-      </div >
+      </div>
       {/* </div> */}
 
       {/* <div

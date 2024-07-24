@@ -781,7 +781,7 @@ const VerticalNav = React.memo(() => {
                         </ul>
                     </Accordion.Collapse>
                 </Accordion.Item> */}
-        <Accordion.Item as="li" eventKey="auth-menu" bsPrefix="nav-item">
+        {/* <Accordion.Item as="li" eventKey="auth-menu" bsPrefix="nav-item">
           <CustomToggle
             eventKey="auth-menu"
             onClick={(activeKey) => setActiveMenu(activeKey)}
@@ -893,7 +893,7 @@ const VerticalNav = React.memo(() => {
               </Nav.Item>
             </ul>
           </Accordion.Collapse>
-        </Accordion.Item>
+        </Accordion.Item> */}
         {/* <Accordion.Item as="li" eventKey="utilities-error" bsPrefix="nav-item">
                     <CustomToggle eventKey="utilities-error" active={activeMenu === 'utilities-error' ? true : false} onClick={(activeKey) => setActiveMenu(activeKey)}>
                         <OverlayTrigger placement="right" overlay={<Tooltip>Utilities</Tooltip>}>
