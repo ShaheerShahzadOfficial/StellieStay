@@ -17,7 +17,7 @@ import _ from "lodash";
 import axios from "axios";
 import { error } from "jquery";
 const DefaultSetting = defaultState.setting;
-const ApiLink = "https://stellie-stay-backend.vercel.app"
+export const ApiLink = "https://stellie-stay-backend.vercel.app"
 const Choices = {
   SchemeChoice: DefaultSetting.theme_scheme.choices,
   ColorChoice: DefaultSetting.theme_color.choices,
@@ -212,7 +212,7 @@ export const loadUser = createAsyncThunk(
     const token = JSON.parse(localStorage.getItem("user"))?.token;
     try {
       const response = await axios.get(`${ApiLink}/user/loadUser`, { headers: { Authorization: "Bearer " + token } });
-      // console.log("API call successful:", response.data); 
+      console.log("API call successful:", response.data); 
       return response.data;
     }
     catch (error) {
@@ -268,6 +268,24 @@ const userSlice = createSlice({
       })
       // Reducer for sign-up failure state
       .addCase(register.rejected, (state, action) => {
+        console.log(action.payload.message, 'state.error')
+        state.loading = false;
+        state.isAuthenticated = false;
+        state.error = action.payload.message; // Assuming error message is in payload
+      })
+      .addCase(loadUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      // Reducer for sign-up success state
+      .addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload?.user;
+        state.error = null;
+      })
+      // Reducer for sign-up failure state
+      .addCase(loadUser.rejected, (state, action) => {
         console.log(action.payload.message, 'state.error')
         state.loading = false;
         state.isAuthenticated = false;
@@ -394,11 +412,10 @@ const dataSlice = createSlice({
       // .addCase(comments.fulfilled, (state, action) => {
       //   state.loading = false;
       //   state.data = action.payload;
-      //   state.error = null;
       // })
       // .addCase(comments.rejected, (state, action) => {
       //   state.loading = false;
-      //   state.error = action.error.message;
+      //   state.error = action.payload;
       // });
   }
 });
