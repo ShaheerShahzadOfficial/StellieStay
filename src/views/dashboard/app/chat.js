@@ -11,13 +11,42 @@ import { ApiLink, ChatRoomState } from "../../../store/setting/reducers";
 import { useSelector } from "react-redux";
 import ChatGroup from "../../../components/custom/ChatGroup";
 import ChatMessage from "../../../components/custom/chatMessage";
+import { useLocation } from "react-router-dom";
 
 const Chat = () => {
   const { chatRoom } = useSelector(ChatRoomState);
   const { user } = useSelector((state) => state.user);
-
+  const { state } = useLocation();
   const [Message, setMessage] = useState([]);
   const [textMessage, setTextMessage] = useState("");
+
+  useEffect(() => {
+    if (state !== null) {
+      setActive(state)
+      console.log({state,chatRoomId :chatRoom[state]?._id})
+      const getMessages = async () => {
+        
+  const otherUser = chatRoom[state]?.users
+  ?.filter((item) => {
+    return item?._id !== user?._id;
+  })
+  ?.at(0);
+        const token = JSON.parse(localStorage.getItem("user"))?.token;
+        await axios
+          .get(`${ApiLink}/chat/get-chat-room-Message/${chatRoom[state]?._id}`, {
+            headers: { Authorization: "Bearer " + token },
+          })
+          .then((result) => {
+            setRoomUser(otherUser);
+    
+            setActive(state);
+            console.log(result.data?.messages, "result.data.messages");
+            setMessage(result.data?.messages);
+          });
+      };
+      return ()=>getMessages()
+    }
+  }, []);
   //date
   // const currentDate = new Date();
   // const dateString = currentDate.toDateString();
@@ -44,40 +73,40 @@ const Chat = () => {
   //   })()
   // }, []);
 
-  const contact = [
-    {
-      id: 1,
-      profile: user1,
-      name: "Paul Molive",
-      timestamp: "03:20 PM",
-      lastMessage: "lorem ipsum",
-      copyContact: "0011100011",
-    },
-    {
-      id: 2,
-      profile: user1,
-      name: "Watson",
-      timestamp: "03:20 PM",
-      lastMessage: "lorem ipsum",
-      copyContact: "0011100012",
-    },
-    {
-      id: 3,
-      profile: user1,
-      name: "Sam",
-      timestamp: "03:20 PM",
-      lastMessage: "lorem ipsum",
-      copyContact: "0011100013",
-    },
-    {
-      id: 4,
-      profile: user1,
-      name: "Malkova",
-      timestamp: "03:20 PM",
-      lastMessage: "lorem ipsum",
-      copyContact: "0011100014",
-    },
-  ];
+  // const contact = [
+  //   {
+  //     id: 1,
+  //     profile: user1,
+  //     name: "Paul Molive",
+  //     timestamp: "03:20 PM",
+  //     lastMessage: "lorem ipsum",
+  //     copyContact: "0011100011",
+  //   },
+  //   {
+  //     id: 2,
+  //     profile: user1,
+  //     name: "Watson",
+  //     timestamp: "03:20 PM",
+  //     lastMessage: "lorem ipsum",
+  //     copyContact: "0011100012",
+  //   },
+  //   {
+  //     id: 3,
+  //     profile: user1,
+  //     name: "Sam",
+  //     timestamp: "03:20 PM",
+  //     lastMessage: "lorem ipsum",
+  //     copyContact: "0011100013",
+  //   },
+  //   {
+  //     id: 4,
+  //     profile: user1,
+  //     name: "Malkova",
+  //     timestamp: "03:20 PM",
+  //     lastMessage: "lorem ipsum",
+  //     copyContact: "0011100014",
+  //   },
+  // ];
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -97,11 +126,12 @@ const Chat = () => {
       )
       .then((res) => {
         console.log(res.data);
-        const message = [...Message]
-        message.push(res.data.result)
-        setMessage(message)
-        setTextMessage('')
-      }).catch((error)=>console.log(error))
+        const message = [...Message];
+        message.push(res.data.result);
+        setMessage(message);
+        setTextMessage("");
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

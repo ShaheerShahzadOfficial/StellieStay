@@ -452,7 +452,7 @@ export const add_Accomudation_Async = createAsyncThunk(
         response = res.data.post;
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error?.reponse || error);
         return thunkAPI.rejectWithValue(error.message);
       });
     return response;
@@ -483,6 +483,8 @@ const AccomudationSlice = createSlice({
     loading: false,
     error: null,
     uploading: false,
+    uploaded:false,
+    uploadedData:null
   },
   extraReducers: (builder) => {
     builder
@@ -491,6 +493,8 @@ const AccomudationSlice = createSlice({
       })
       .addCase(add_Accomudation_Async.fulfilled, (state, action) => {
         state.uploading = false;
+        state.uploaded = true;
+        state.uploadedData = action.payload
       })
       .addCase(add_Accomudation_Async.rejected, (state, action) => {
         state.uploading = false;

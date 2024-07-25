@@ -43,14 +43,17 @@ const HotelDetail = () => {
     if (user?._id === HotelDetail?.postedBy) return alert('no one can contact itself')
 
     if (ChatGroup) {
-      console.log(chatRoom)
+      // console.log(chatRoom)
       const index = chatRoom.findIndex((item) => {
         return item._id === ChatGroup._id;
       });
-      if (index > -1) {
+      console.log(index)
+
+      if (index  < 0) {
         return;
       }
       navigate("/chat/index", { state: index });
+
     } else {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
 
@@ -64,7 +67,7 @@ const HotelDetail = () => {
           setChatGroup(result.data.result);
           const groups = [...chatRoom, result.data.result];
           dispatch(getChatRoom());
-          console.log(chatRoom)
+          // console.log(chatRoom)
 
           navigate("/chat/index", { state: groups.length });
         })

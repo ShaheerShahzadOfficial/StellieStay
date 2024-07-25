@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Nav,
   Form,
@@ -33,7 +33,10 @@ import logo from "../../../../assets/logo/logo.png";
 // Redux Selector / Action
 import { useDispatch, useSelector } from "react-redux";
 import SearchModal from "../../../search-modal";
-import { add_Accomudation_Async } from "../../../../store/setting/reducers";
+import {
+  AccomudationState,
+  add_Accomudation_Async,
+} from "../../../../store/setting/reducers";
 
 const Header = () => {
   const appName = useSelector(SettingSelector.app_name);
@@ -52,7 +55,7 @@ const Header = () => {
   const [hotelDesc, setHotelDesc] = useState("");
   const [images, setImages] = useState([]);
   const [size, setSize] = useState();
-
+  const [Err, setErr] = useState("");
   const handleImageChange = (e) => {
     for (let index = 0; index < e.target.files.length; index++) {
       const file = e.target.files[index];
@@ -66,11 +69,19 @@ const Header = () => {
       };
     }
   };
+  const { uploaded, data, uploadedData } = useSelector(AccomudationState);
 
+  useEffect(() => {
+    if (uploaded) {
+      const newData = [...data];
+      newData.push(uploadedData);
+      dispatch({ type: add_Accomudation_Async.rejected });
+      setErr("");
+    }
+  }, []);
   const handleUpload = (e) => {
     e.preventDefault();
-    console.log("handleUpload");
-    if (images) {
+    if (images && address && city && hotelDesc && hotelName && size) {
       const formData = {
         Address: address,
         city: city,
@@ -84,6 +95,10 @@ const Header = () => {
       };
 
       dispatch(add_Accomudation_Async(formData));
+      handleClose();
+
+    } else {
+      setErr("All Fields Are Required");
     }
   };
 
@@ -776,18 +791,23 @@ const Header = () => {
                     >
                       Submit
                     </Button>
+                    {Err && (
+                      <div className="alert alert-danger mt-2" role="alert">
+                        {Err}
+                      </div>
+                    )}
                   </Form>
                 </div>
               </Modal>
-              <Link to={'/chat/index'}   className=" d-flex align-items-center">
+              <Link to={"/chat/index"} className=" d-flex align-items-center">
                 {/* <Dropdown.Toggle
                   as="a"
                   to="#"
                   className=" d-flex align-items-center"
                   id="mail-drop"
                 > */}
-                  <i className="material-symbols-outlined">mail</i>
-                  <span className="mobile-text d-none ms-3">Message</span>
+                <i className="material-symbols-outlined">mail</i>
+                <span className="mobile-text d-none ms-3">Message</span>
                 {/* </Dropdown.Toggle> */}
               </Link>
 
