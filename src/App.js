@@ -15,16 +15,15 @@ import { useDispatch } from 'react-redux';
 // import state selectors
 import { setSetting } from './store/setting/actions'
 import "./assets/custom/scss/socialv-custom.scss"
-import { Navigate, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import { loadUser } from "./store/setting/reducers"
+import { getChatRoom, loadUser } from "./store/setting/reducers"
 
 
 function App({ children }) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadUser())
-    console.log("loadUser",'Api Called')
+    dispatch(getChatRoom());
   }, [dispatch])
   dispatch(setSetting())
 

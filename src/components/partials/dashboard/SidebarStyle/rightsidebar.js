@@ -491,9 +491,9 @@ const RightSidebar = () => {
                   View All Conversion
                 </Button>
               </div>
-              <div className="right-sidebar-toggle bg-primary text-white mt-3 d-flex" onClick={minirightsidebar}>
+              {/* <div className="right-sidebar-toggle bg-primary text-white mt-3 d-flex" >
                 <span className="material-symbols-outlined">chat</span>
-              </div>
+              </div> */}
             </Card.Body>
           </Card>
         </div>

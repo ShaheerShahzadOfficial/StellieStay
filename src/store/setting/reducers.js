@@ -512,3 +512,61 @@ const AccomudationSlice = createSlice({
 
 export const AccomudationState = (state) => state.Accomudation;
 export const AccomudationSlices = AccomudationSlice.reducer;
+
+export const getChatRoom = createAsyncThunk(
+  "chatRoom/get",
+  async (thunkAPI) => {
+    let response;
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+    await axios
+      .get(`${ApiLink}/chat/get-chat-room`, {
+        headers: { Authorization: "Bearer " + token },
+      })
+      .then((res) => {
+        response = res.data.rooms;
+      })
+      .catch((error) => {
+        return thunkAPI.rejectWithValue(error.message);
+      });
+    return response;
+  }
+);
+
+const ChatRoomSlice = createSlice({
+  name: "ChatRoom",
+  initialState: {
+    chatRoom: [],
+    loading: false,
+    error: null,
+    creating: false,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getChatRoom.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getChatRoom.fulfilled, (state, action) => {
+        state.loading = false;
+        state.chatRoom = action.payload;
+      })
+      .addCase(getChatRoom.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    // .addCase(get_Accomudation_Async.pending, (state, action) => {
+    //   state.loading = true;
+    // })
+    // .addCase(get_Accomudation_Async.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.data = action.payload;
+    // })
+    // .addCase(get_Accomudation_Async.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    // });
+  },
+});
+
+export const ChatRoomState = (state) => state.chatRoom;
+export const ChatRoomSlices = ChatRoomSlice.reducer;

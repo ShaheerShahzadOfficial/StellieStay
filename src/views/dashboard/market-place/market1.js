@@ -72,7 +72,7 @@ const Market1 = () => {
                     </span>
                     <div className="mt-2"></div>
                     {/* <span className="text-warning d-block line-height mt-0">
-                  <li class="material-symbols-outlined">design_services</li>
+                  <li className="material-symbols-outlined">design_services</li>
                   <small>200sq</small>
                   </span> */}
                     <div
@@ -87,7 +87,7 @@ const Market1 = () => {
                     >
                       <span className="text-warning d-block line-height mt-0">
                         <span className="text-warning d-flex align-items-center mt-2">
-                          <li class="material-symbols-outlined">
+                          <li className="material-symbols-outlined">
                             design_services
                           </li>
 
@@ -99,7 +99,7 @@ const Market1 = () => {
 
                       {accomudation?.CreditCard && (
                         <span className="text-warning d-flex align-items-center mt-2">
-                          <li class="material-symbols-outlined">credit_card</li>
+                          <li className="material-symbols-outlined">credit_card</li>
 
                           <small className="text-dark me-1">Card</small>
                         </span>
@@ -107,7 +107,7 @@ const Market1 = () => {
 
                       {accomudation?.Wifi && (
                         <span className="text-warning d-flex align-items-center mt-2">
-                          <li class="material-symbols-outlined">wifi</li>
+                          <li className="material-symbols-outlined">wifi</li>
 
                           <small className="text-dark me-1">Wifi</small>
                         </span>

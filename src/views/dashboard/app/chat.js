@@ -7,17 +7,24 @@ import user10 from "../../../assets/images/chat/avatar/10.png";
 
 import Scrollbar from "smooth-scrollbar";
 import axios from "axios";
-import { ApiLink } from "../../../store/setting/reducers";
+import { ApiLink, ChatRoomState } from "../../../store/setting/reducers";
+import { useSelector } from "react-redux";
+import ChatGroup from "../../../components/custom/ChatGroup";
+import ChatMessage from "../../../components/custom/chatMessage";
 
 const Chat = () => {
+  const { chatRoom } = useSelector(ChatRoomState);
+  const { user } = useSelector((state) => state.user);
 
+  const [Message, setMessage] = useState([]);
+  const [textMessage, setTextMessage] = useState("");
   //date
-  const currentDate = new Date();
-  const dateString = currentDate.toDateString();
-  const parts = dateString.split(" ");
-  const formattedDate = `${parts[0]} ${parts[1]}, ${parts[2]}`;
-  console.log(formattedDate);
-
+  // const currentDate = new Date();
+  // const dateString = currentDate.toDateString();
+  // const parts = dateString.split(" ");
+  // const formattedDate = `${parts[0]} ${parts[1]}, ${parts[2]}`;
+  // console.log(formattedDate);
+  const [RoomUser, setRoomUser] = useState();
   //date
 
   useEffect(() => {
@@ -29,16 +36,13 @@ const Chat = () => {
     document.getElementsByTagName("ASIDE")[0].classList.toggle("sidebar-mini");
   };
 
-
-
   // useEffect(() => {
   //   (async ()=>{
   //      axios.get(`${ApiLink}/chat//get-chat-room`).then((res)=>{
-        
+
   //      })
   //   })()
   // }, []);
-
 
   const contact = [
     {
@@ -74,6 +78,31 @@ const Chat = () => {
       copyContact: "0011100014",
     },
   ];
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+    await axios
+      .post(
+        `${ApiLink}/chat/add-Message/${chatRoom[active]._id}`,
+        {
+          message: textMessage,
+          messageType: "text",
+          Sender: user?._id,
+        },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        const message = [...Message]
+        message.push(res.data.result)
+        setMessage(message)
+        setTextMessage('')
+      }).catch((error)=>console.log(error))
+  };
 
   return (
     <>
@@ -144,47 +173,17 @@ const Chat = () => {
                 role="tablist"
               >
                 <h6 className="mb-3 pb-1">Recent Chats</h6>
-                {contact.map((items, i) => {
+                {chatRoom.map((items, i) => {
                   return (
-                    <Nav.Item
-                      as="li"
-                      className="iq-chat-list mb-3 ps-0"
-                      role="presentation"
-                    >
-                      <Nav.Link
-                        className={`d-flex gap-3 rounded-2 zoom-in ${
-                          active === i ? "active" : ""
-                        }`}
-                        onClick={() => setActive(i)}
-                      >
-                        <div className="position-relative">
-                          <img
-                            src={items.profile}
-                            alt="status-101"
-                            className="avatar-48 object-cover rounded-circle"
-                            loading="lazy"
-                          />
-                          <div className="iq-profile-badge bg-success"></div>
-                        </div>
-                        <div className="d-flex align-items-top w-100 iq-userlist-data">
-                          <div className="d-flex flex-grow-1 flex-column">
-                            <div className="d-flex align-items-center gap-1">
-                              <h6 className="mb-0 iq-userlist-name font-size-14 fw-semibold mb-0 text-ellipsis short-1 flex-grow-1">
-                                {items.name}
-                              </h6>
-                              <span className="mb-0 font-size-12">
-                                {items.timestamp}
-                              </span>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <p className="text-ellipsis short-1 flex-grow-1 font-size-14 mb-0">
-                                {items.lastMessage}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </Nav.Link>
-                    </Nav.Item>
+                    <ChatGroup
+                      key={i}
+                      i={i}
+                      items={items}
+                      active={active}
+                      setActive={setActive}
+                      setMessages={setMessage}
+                      setRoomUser={setRoomUser}
+                    />
                   );
                 })}
               </ul>
@@ -238,66 +237,28 @@ const Chat = () => {
                         <div className="iq-profile-badge bg-success"></div>
                       </div>
                       <div>
-                        <h5 className="mb-0">{contact[active]?.name}</h5>
-                        <small className="text-capitalize fw-500">Online</small>
+                        <h5 className="mb-0">{RoomUser?.name}</h5>
+                        {/* <small className="text-capitalize fw-500">Online</small> */}
                       </div>
                     </div>
                   </header>
                 </div>
                 <div className="card-body chat-body bg-body">
-                  {/* <div className="chat-day-title">
-                    <span className="main-title">{formattedDate}</span>
-                  </div> */}
-                  <div className="iq-message-body iq-current-user">
-                    <div className="chat-profile text-center">
-                      <img
-                        src={user10}
-                        alt="chat-user"
-                        className="avatar-40 rounded-pill"
-                        loading="lazy"
-                      />
-                      <small className="iq-chating p-0 mb-0 d-block">
-                        16:34
-                      </small>
-                    </div>
-                    <div className="iq-chat-text">
-                      <div className="d-flex align-items-center justify-content-end gap-1 gap-md-2">
-                        <div className="iq-chating-content d-flex align-items-center">
-                          <p className="mr-2 mb-0">
-                            How can we help? We're here for you! 😄
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="iq-message-body iq-other-user">
-                    <div className="chat-profile text-center">
-                      <img
-                        src={user1}
-                        alt="chat-user"
-                        className="avatar-40 rounded-pill"
-                        loading="lazy"
-                      />
-                      <small className="iq-chating p-0 mb-0 d-block">
-                        16:40
-                      </small>
-                    </div>
-                    <div className="iq-chat-text">
-                      <div className="d-flex align-items-center justify-content-start gap-md-2">
-                        <div className="iq-chating-content d-flex align-items-center">
-                          <p className="mr-2 mb-0">
-                            Hey John, I am looking for the best admin
-                            template.Could you please help me to find it out? 🤔
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {Message.map((message, i) => (
+                    <ChatMessage message={message} key={i} />
+                  ))}
                 </div>
                 <div className="card-footer px-3 py-3 border-top rounded-0">
-                  <form className="d-flex align-items-center" action="#">
+                  <form
+                    className="d-flex align-items-center"
+                    onSubmit={sendMessage}
+                  >
                     <input
                       type="text"
+                      value={textMessage}
+                      onChange={(e) => {
+                        setTextMessage(e.target.value);
+                      }}
                       className="form-control me-3"
                       placeholder="Type your message"
                     />

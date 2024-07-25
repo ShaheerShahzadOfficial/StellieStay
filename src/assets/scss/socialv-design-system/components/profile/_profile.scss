@@ -133,6 +133,14 @@ ul.header-nav {
   padding: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
+  outline: none;
+}
+.features{
+  &:disabled{
+    background-color: #aaaaaa;
+    color: black;
+    cursor: not-allowed;
+  }
 }
 .features > p {
   margin: 0;

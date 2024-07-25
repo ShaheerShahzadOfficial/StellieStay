@@ -72,7 +72,7 @@ const VerticalNav = React.memo(() => {
               placement="right"
               overlay={<Tooltip>Home</Tooltip>}
             >
-              <li class="material-symbols-outlined">home</li>
+              <li className="material-symbols-outlined">home</li>
             </OverlayTrigger>
             <span className="item-name">Home</span>
           </Link>

@@ -31,7 +31,7 @@ const Default = () => {
 
         </div>
       </div>
-      <RightSidebar />
+      {/* <RightSidebar /> */}
       <Footer />
       <SettingOffCanvas />
     </>

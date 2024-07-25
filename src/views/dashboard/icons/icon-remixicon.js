@@ -182,7 +182,7 @@ const Remixicon = () => {
                 <Card.Body className="pt-0">
                   <p>
                     Use Class{" "}
-                    <code>&lt;i class="ri-4k-fill"&gt;&lt;/i&gt;</code>
+                    <code>&lt;i className="ri-4k-fill"&gt;&lt;/i&gt;</code>
                   </p>
                   <Row className="mt-3">
                     {remixicon.map((item, idx) => (

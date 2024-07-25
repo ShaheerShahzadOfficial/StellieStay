@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Card";
-import { Collapse, Dropdown, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Col, Collapse, Dropdown, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ShareOffcanvasNew from "../ShareOffcanvasNew";
 import icon1 from "../../assets/images/icon/01.png";
@@ -82,6 +82,8 @@ const Post = ({ items }) => {
             },
           ])
         );
+
+        setComment('')
       })
       .catch((error) => {
         console.log(error.response || error);
@@ -114,9 +116,12 @@ const Post = ({ items }) => {
       })
       .catch((error) => {
         console.log(error.response || error);
+
       });
   };
   return (
+    <Row className="special-post-container">
+                  <Col sm={12} className="special-post">
     <Card className=" card-block card-stretch card-height">
       <FsLightbox
         toggler={imageController.toggler}
@@ -329,7 +334,7 @@ const Post = ({ items }) => {
                     role="button"
                   >
                     {isLiked ? (
-                      <span class="material-symbols-outlined align-text-top font-size-20 like">
+                      <span className="material-symbols-outlined align-text-top font-size-20 like">
                         thumb_up
                       </span>
                     ) : (
@@ -538,6 +543,8 @@ const Post = ({ items }) => {
         </div>
       </Card.Body>
     </Card>
+    </Col>
+    </Row>
   );
 };
 

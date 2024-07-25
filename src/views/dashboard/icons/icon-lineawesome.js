@@ -183,7 +183,7 @@ const Lineawesome = () => {
                 <Card.Body className="pt-0">
                   <p>
                     Use Class{" "}
-                    <code>&lt;i class="las la-bell"&gt;&lt;/i&gt;</code>
+                    <code>&lt;i className="las la-bell"&gt;&lt;/i&gt;</code>
                   </p>
                   <Row className="mt-3">
                     {lineawesome.map((item, idx) => (

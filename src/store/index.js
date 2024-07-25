@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import settingReducer, { AccomudationSlices, getPost } from "./setting/reducers";
+import settingReducer, { AccomudationSlices, ChatRoomSlices, getPost } from "./setting/reducers";
 import { userReducer } from "./setting/reducers";
 export const store = configureStore({
   reducer: {
@@ -7,5 +7,6 @@ export const store = configureStore({
     user: userReducer,
     data: getPost,
     Accomudation: AccomudationSlices,
+    chatRoom:ChatRoomSlices
   },
 });

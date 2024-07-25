@@ -192,7 +192,7 @@ const Fontawesome = () => {
                   <p>
                     Use Class{" "}
                     <code>
-                      &lt;i class="far fa-address-book"&gt;&lt;/i&gt;
+                      &lt;i className="far fa-address-book"&gt;&lt;/i&gt;
                     </code>
                   </p>
                   <Row className="mt-3">

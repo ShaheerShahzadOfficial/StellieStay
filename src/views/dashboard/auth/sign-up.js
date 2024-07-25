@@ -43,7 +43,7 @@ const SignUp = () => {
         setName('');
         navigate("/auth/sign-in");
       } else if (result.error) {
-        console.log(result.error.message);
+        console.log(result.error?.message || result.error);
       }
     }).catch((err) => {
       console.log(err);

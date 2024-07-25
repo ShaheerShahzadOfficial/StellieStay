@@ -201,7 +201,7 @@ const UiTypographys = () => {
                   <p>
                     For quoting blocks of content from another source within
                     your document. Wrap{" "}
-                    <code>&lt;blockquote class="blockquote"&gt;</code>{" "}
+                    <code>&lt;blockquote className="blockquote"&gt;</code>{" "}
                     around any{" "}
                     <abbr title="HyperText Markup Language">HTML</abbr> as the
                     quote.

@@ -146,7 +146,7 @@ const Material = () => {
                                     </div>
                                 </Card.Header>
                                 <Card.Body className='pt-0'>
-                                    <p>Use Class &lt;span class="material-symbols-outlined"&gt; search &lt;/span&gt;</p>
+                                    <p>Use Class &lt;span className="material-symbols-outlined"&gt; search &lt;/span&gt;</p>
                                     <Row className="mt-3">
                                         {
                                             material.map((item, idex) => {
