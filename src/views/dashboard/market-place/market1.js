@@ -20,7 +20,7 @@ const Market1 = () => {
   const { data } = useSelector(AccomudationState);
   useEffect(() => {
     dispatch(get_Accomudation_Async());
-    console.log(data,"datadatadatadatadatadatadatadatadatadata")
+    console.log(data, "datadatadatadatadatadatadatadatadatadata");
   }, [dispatch]);
   return (
     <>
@@ -30,8 +30,8 @@ const Market1 = () => {
             <div className="mb-2">
               <h4>Hotels For Accumodation</h4>
             </div>
-            <Col sm="6" md="4">
-              {data?.map((accomudation, i) => (
+            {data?.map((accomudation, i) => (
+              <Col sm="6" md="4">
                 <Card className="cardhover" key={i}>
                   <Card.Body>
                     <img
@@ -99,7 +99,9 @@ const Market1 = () => {
 
                       {accomudation?.CreditCard && (
                         <span className="text-warning d-flex align-items-center mt-2">
-                          <li className="material-symbols-outlined">credit_card</li>
+                          <li className="material-symbols-outlined">
+                            credit_card
+                          </li>
 
                           <small className="text-dark me-1">Card</small>
                         </span>
@@ -114,13 +116,16 @@ const Market1 = () => {
                       )}
                     </div>
 
-                    <Link to={`/dashboards/hotel-detail/${accomudation?._id}`} className="detailBtn">
+                    <Link
+                      to={`/dashboards/hotel-detail/${accomudation?._id}`}
+                      className="detailBtn"
+                    >
                       Detail
                     </Link>
                   </Card.Body>
                 </Card>
-              ))}
-            </Col>
+              </Col>
+            ))}
             {/* <Col sm="6" md="4">
               <Card className="cardhover">
                 <Card.Body>
