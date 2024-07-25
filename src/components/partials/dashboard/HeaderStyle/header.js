@@ -36,6 +36,7 @@ import SearchModal from "../../../search-modal";
 import {
   AccomudationState,
   add_Accomudation_Async,
+  get_Accomudation_Async,
 } from "../../../../store/setting/reducers";
 
 const Header = () => {
@@ -72,13 +73,13 @@ const Header = () => {
   const { uploaded, data, uploadedData } = useSelector(AccomudationState);
 
   useEffect(() => {
+    console.log({ uploaded });
     if (uploaded) {
-      const newData = [...data];
-      newData.push(uploadedData);
-      dispatch({ type: add_Accomudation_Async.rejected });
+      dispatch(get_Accomudation_Async());
       setErr("");
+      handleClose();
     }
-  }, []);
+  }, [uploaded]);
   const handleUpload = (e) => {
     e.preventDefault();
     if (images && address && city && hotelDesc && hotelName && size) {
@@ -95,8 +96,7 @@ const Header = () => {
       };
 
       dispatch(add_Accomudation_Async(formData));
-      handleClose();
-
+      // handleClose();
     } else {
       setErr("All Fields Are Required");
     }

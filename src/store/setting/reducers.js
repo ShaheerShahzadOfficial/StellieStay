@@ -502,6 +502,7 @@ const AccomudationSlice = createSlice({
       })
       .addCase(get_Accomudation_Async.pending, (state, action) => {
         state.loading = true;
+        state.uploaded = false;
       })
       .addCase(get_Accomudation_Async.fulfilled, (state, action) => {
         state.loading = false;
