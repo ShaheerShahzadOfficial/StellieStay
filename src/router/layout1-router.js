@@ -25,6 +25,7 @@ import Profile2 from "../views/dashboard/profiles/profile2";
 import Profile3 from "../views/dashboard/profiles/profile3";
 import ProductDetail from "../views/dashboard/store/product-detail";
 import HotelDetail from "../views/dashboard/HotelDetail/hotel-detail";
+import Protected from "../views/ProtectedRoutes/Protected";
 
 export const Layout1Router = [
   {
@@ -32,7 +33,7 @@ export const Layout1Router = [
     element: <Groups />,
   },
   {
-    path: "dashboards/app/group-detail",
+    path: "dashboards/app/group-detail/:id",
     element: <GroupDetail />,
   },
   {
@@ -88,12 +89,12 @@ export const Layout1Router = [
     element: <StoreCheckout />,
   },
   {
-    path:'dashboards/store/product-detail',
-    element:<ProductDetail/>
+    path: "dashboards/store/product-detail",
+    element: <ProductDetail />,
   },
   {
     path: "dashboards/market-place/market1",
-    element: <Market1 />,
+    element: <Protected Component={Market1} />,
   },
   {
     path: "dashboards/hotel-detail/:id",

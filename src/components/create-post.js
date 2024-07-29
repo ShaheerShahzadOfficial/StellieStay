@@ -11,8 +11,9 @@ import CustomToggle from "./dropdowns";
 
 //images
 import user1 from "../assets/images/user/1.jpg";
-import { useDispatch } from "react-redux";
-import { uploadContentAsync } from "../store/setting/reducers";
+import { useDispatch, useSelector } from "react-redux";
+import { ApiLink, uploadContentAsync } from "../store/setting/reducers";
+import axios from "axios";
 // import small1 from "../assets/images/small/07.png";
 // import small2 from "../assets/images/small/08.png";
 // import small3 from "../assets/images/small/09.png";
@@ -23,13 +24,14 @@ import { uploadContentAsync } from "../store/setting/reducers";
 // import small8 from "../assets/images/small/14.png";
 
 const CreatePost = (props) => {
+  const { user } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [file, setFile] = useState([]);
-  const [caption, setCaption] = useState('');
+  const [caption, setCaption] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleCaptionChange = (e) => {
     setCaption(e.target.value);
   };
@@ -50,28 +52,46 @@ const CreatePost = (props) => {
 
       Reader.onload = () => {
         if (Reader.readyState === 2) {
-
-
-          setFile((pre) => [
-            ...pre,
-            Reader.result,
-          ]);
+          setFile((pre) => [...pre, Reader.result]);
         }
       };
     }
   };
   const handleUpload = () => {
     if (file && caption) {
-      const formData = {
-        file: file,
-        caption: caption,
-      };
-
-      dispatch(uploadContentAsync({
-        caption, file,
-
-      }));
+      dispatch(
+        uploadContentAsync({
+          caption,
+          file,
+        })
+      );
     }
+  };
+
+  const handleGroupPost = async (e) => {
+    e.preventDefault();
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+    await axios
+      .post(
+        `${ApiLink}/post/createPost/group`,
+        {
+          caption,
+          file,
+          groupId: props.groupId,
+        },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        props.setGroupPost((pre) => [...pre, data.post]);
+        handleClose();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <>
@@ -80,47 +100,42 @@ const CreatePost = (props) => {
           <div className="header-title">
             <h5 className="card-title">Add a Post</h5>
           </div>
-          <Dropdown >
-            <Dropdown.Toggle className="lh-1" id="post-option" as="div" bsPrefix=" ">
+          {/* <Dropdown>
+            <Dropdown.Toggle
+              className="lh-1"
+              id="post-option"
+              as="div"
+              bsPrefix=" "
+            >
               <span className="material-symbols-outlined">more_horiz</span>
             </Dropdown.Toggle>
             <Dropdown.Menu
               variant="right"
               aria-labelledby="post-option"
-              style={{ position: 'absolute', inset: 'auto auto 0px 0px', margin: '0px', transform: 'translate(0px, -27px)' }}
+              style={{
+                position: "absolute",
+                inset: "auto auto 0px 0px",
+                margin: "0px",
+                transform: "translate(0px, -27px)",
+              }}
             >
-              <Dropdown.Item
-                href="#"
-                onClick={handleShow}
-              >
+              <Dropdown.Item href="#" onClick={handleShow}>
                 Check in
               </Dropdown.Item>
-              <Dropdown.Item
-                href="#"
-                onClick={handleShow}
-              >
+              <Dropdown.Item href="#" onClick={handleShow}>
                 Live Video
               </Dropdown.Item>
-              <Dropdown.Item
-                href="#"
-                onClick={handleShow}
-              >
+              <Dropdown.Item href="#" onClick={handleShow}>
                 GIF
               </Dropdown.Item>
-              <Dropdown.Item
-                href="#"
-                onClick={handleShow}
-              >
+              <Dropdown.Item href="#" onClick={handleShow}>
                 Watch Party
               </Dropdown.Item>
-              <Dropdown.Item
-                href="#"
-                onClick={handleShow}
-              >
+              <Dropdown.Item href="#" onClick={handleShow}>
                 Play with Friend
               </Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
         </div>
         <div className="card-body">
           <div className="d-flex align-items-center mb-5">
@@ -288,7 +303,11 @@ const CreatePost = (props) => {
               <div className="user-img">
                 <img
                   loading="lazy"
-                  src={user1}
+                  src={
+                    user?.profile_Picture?.url
+                      ? user?.profile_Picture?.url
+                      : user1
+                  }
                   alt="userimg"
                   className="avatar-60 rounded-circle img-fluid"
                 />
@@ -299,162 +318,34 @@ const CreatePost = (props) => {
                   className="form-control rounded"
                   placeholder="Write something here..."
                   style={{ border: "none" }}
-                  value={caption} onChange={handleCaptionChange}
+                  value={caption}
+                  onChange={handleCaptionChange}
                 />
               </form>
             </div>
             <hr />
             <ul className="d-flex flex-wrap align-items-center list-inline m-0 p-0">
               <li className="col-md-6 mb-3">
+                <label htmlFor="fileInput">
                 <div className="bg-primary-subtle rounded p-2 pointer me-3">
                   {/* <Link to="#" className="custom-link-color d-inline-block fw-medium text-body"><span className="material-symbols-outlined align-middle font-size-20 me-1"> */}
                   {/* </span>{" "} */}
-                  <input type="file" onChange={handleFileChange} />
+                  
                   Photo/Video
                   {/* </Link> */}
-
                 </div>
-              </li>
-              <li className="col-md-6 mb-3">
-                <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body">
-                    <span className="material-symbols-outlined align-middle font-size-20 me-1">
-                      group
-                    </span>{" "}
-                    Tag Friend
-                  </Link>
-                </div>
-              </li>
-              <li className="col-md-6 mb-3">
-                <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body">
-                    <span className="material-symbols-outlined align-middle font-size-20 me-1">
-                      sentiment_satisfied
-                    </span>{" "}
-                    Feeling/Activity
-                  </Link>
-                </div>
-              </li>
-              <li className="col-md-6 mb-3">
-                <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body">
-                    <span className="material-symbols-outlined align-middle font-size-20 me-1">
-                      location_on
-                    </span>{" "}
-                    Check in
-                  </Link>
-                </div>
-              </li>
-              <li className="col-md-6 mb-3">
-                <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body">
-                    <span className="material-symbols-outlined align-middle font-size-20 me-1">
-                      live_tv
-                    </span>{" "}
-                    Live Video
-                  </Link>
-                </div>
-              </li>
-              <li className="col-md-6 mb-3">
-                <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body">
-                    <span className="material-symbols-outlined align-middle font-size-20 me-1">
-                      gif_box
-                    </span>{" "}
-                    GIF
-                  </Link>
-                </div>
-              </li>
-              <li className="col-md-6 mb-3">
-                <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body">
-                    <span className="material-symbols-outlined align-middle font-size-20 me-1">
-                      celebration
-                    </span>{" "}
-                    Watch Party
-                  </Link>
-                </div>
-              </li>
-              <li className="col-md-6 mb-3">
-                <div className="bg-primary-subtle rounded p-2 pointer me-3">
-                  <Link to="#" className="custom-link-color d-inline-block fw-medium text-body">
-                    <span className="material-symbols-outlined align-middle font-size-20 me-1">
-                      sports_esports
-                    </span>{" "}
-                    Play with Friends
-                  </Link>
-                </div>
+                </label>
+                <input style={{display:"none"}} type="file" id="fileInput" onChange={handleFileChange} />
               </li>
             </ul>
             <hr />
-            <div className="other-option">
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center">
-                  <div className="user-img me-3">
-                    <img
-                      loading="lazy"
-                      src={user1}
-                      alt="userimg"
-                      className="avatar-60 rounded-circle img-fluid"
-                    />
-                  </div>
-                  <h6>Your Story</h6>
-                </div>
-                <div className="card-post-toolbar">
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      className="btn btn-primary"
-                      data-bs-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                      role="button"
-                    >
-                      Friend
-                      {/* <span className="btn btn-primary">Friend</span> */}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className=" m-0 p-0">
-                      <Dropdown.Item className="p-3" href="#">
-                        <div className="d-flex align-items-top">
-                          <span className="material-symbols-outlined">save</span>
-                          <div className="data ms-2">
-                            <h6>Public</h6>
-                            <p className="mb-0">Anyone on or off Facebook</p>
-                          </div>
-                        </div>
-                      </Dropdown.Item>
-                      <Dropdown.Item className="p-3" href="#">
-                        <div className="d-flex align-items-top">
-                          <span className="material-symbols-outlined">cancel</span>
-                          <div className="data ms-2">
-                            <h6>Friends</h6>
-                            <p className="mb-0">Your Friend on facebook</p>
-                          </div>
-                        </div>
-                      </Dropdown.Item>
-                      <Dropdown.Item className="p-3" href="#">
-                        <div className="d-flex align-items-top">
-                          <span className="material-symbols-outlined">person_remove</span>
-                          <div className="data ms-2">
-                            <h6>Friends except</h6>
-                            <p className="mb-0">Don't show to some friends</p>
-                          </div>
-                        </div>
-                      </Dropdown.Item>
-                      <Dropdown.Item className="p-3" href="#">
-                        <div className="d-flex align-items-top">
-                          <span className="material-symbols-outlined">notifications</span>
-                          <div className="data ms-2">
-                            <h6>Only Me</h6>
-                            <p className="mb-0">Only me</p>
-                          </div>
-                        </div>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-              </div>
-            </div>
-            <Button variant="primary" className="d-block w-100 mt-3" type="submit" onClick={handleUpload}>
+
+            <Button
+              variant="primary"
+              className="d-block w-100 mt-3"
+              type="submit"
+              onClick={props?.IsGroupPost ? handleGroupPost : handleUpload}
+            >
               Post
             </Button>
           </Modal.Body>

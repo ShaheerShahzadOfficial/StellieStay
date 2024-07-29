@@ -20,7 +20,6 @@ const Market1 = () => {
   const { data } = useSelector(AccomudationState);
   useEffect(() => {
     dispatch(get_Accomudation_Async());
-    console.log(data, "datadatadatadatadatadatadatadatadatadata");
   }, [dispatch]);
   return (
     <>

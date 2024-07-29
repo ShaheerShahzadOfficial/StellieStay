@@ -82,12 +82,16 @@ import { components } from "react-select";
 
 export const DefaultRouter = [
   {
-    path: '/',
+    path: "/",
     element: <Protected Component={Index} />,
   },
   {
     path: "dashboard/app/profile",
     element: <Protected Component={UserProfile} />,
+  },
+  {
+    path: "dashboard/app/user/:id",
+    element: <Protected Component={FriendProfile} />,
   },
   {
     path: "dashboard/app/user-privacy-setting",

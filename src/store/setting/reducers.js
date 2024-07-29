@@ -227,16 +227,16 @@ export const loadUser = createAsyncThunk("load-user", async () => {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    loading: false,
+    loading: true,
     user: null,
-    error: null,
+    error: null,isAuthenticated:false
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.user = null;
-        state.isAuthenticated = true;
+        state.isAuthenticated = false;
         state.error = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -276,6 +276,7 @@ const userSlice = createSlice({
       .addCase(loadUser.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.isAuthenticated = false;
       })
       // Reducer for sign-up success state
       .addCase(loadUser.fulfilled, (state, action) => {
@@ -483,8 +484,8 @@ const AccomudationSlice = createSlice({
     loading: false,
     error: null,
     uploading: false,
-    uploaded:false,
-    uploadedData:null
+    uploaded: false,
+    uploadedData: null,
   },
   extraReducers: (builder) => {
     builder
@@ -494,7 +495,7 @@ const AccomudationSlice = createSlice({
       .addCase(add_Accomudation_Async.fulfilled, (state, action) => {
         state.uploading = false;
         state.uploaded = true;
-        state.uploadedData = action.payload
+        state.uploadedData = action.payload;
       })
       .addCase(add_Accomudation_Async.rejected, (state, action) => {
         state.uploading = false;

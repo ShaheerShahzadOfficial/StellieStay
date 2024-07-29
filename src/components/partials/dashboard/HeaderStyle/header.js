@@ -82,7 +82,14 @@ const Header = () => {
   }, [uploaded]);
   const handleUpload = (e) => {
     e.preventDefault();
-    if (images && address && city && hotelDesc && hotelName && size) {
+    if (
+      images.length > 0 &&
+      address &&
+      city &&
+      hotelDesc &&
+      hotelName &&
+      size
+    ) {
       const formData = {
         Address: address,
         city: city,
@@ -494,178 +501,7 @@ const Header = () => {
                   </i>
                 </Dropdown.Toggle>
               </Dropdown>
-              <Dropdown className="nav-item " as="li">
-                <Dropdown.Toggle
-                  as="a"
-                  bsPrefix=" "
-                  to="#"
-                  className="dropdown-toggle d-flex align-items-center"
-                  id="group-drop"
-                >
-                  <span className="material-symbols-outlined">group</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu
-                  className={`sub-drop sub-drop-large`}
-                  aria-labelledby="group-drop"
-                  data-bs-popper="static"
-                >
-                  <div className="card shadow m-0">
-                    <div className="card-header d-flex justify-content-between px-0 pb-4 mx-5 border-bottom">
-                      <div className="header-title">
-                        <h5 className="fw-semibold">Friend Request</h5>
-                      </div>
-                    </div>
-                    <div className="card-body">
-                      <div className="item-header-scroll">
-                        <div className="iq-friend-request">
-                          <div className="iq-sub-card-big d-flex align-items-center justify-content-between mb-4">
-                            <div className="d-flex align-items-center">
-                              <img
-                                className="avatar-40 rounded-pill"
-                                src={user5}
-                                alt=""
-                                loading="lazy"
-                              />
-                              <div className="ms-3">
-                                <h6 className="mb-0 ">Jaques Amole</h6>
-                                <p className="mb-0">40 friends</p>
-                              </div>
-                            </div>
-                            <div className="d-flex align-items-center">
-                              <Link
-                                to="#"
-                                className="me-2 rounded bg-primary-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  add
-                                </span>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="me-3 rounded bg-danger-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  close
-                                </span>
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="iq-friend-request">
-                          <div className="iq-sub-card-big d-flex align-items-center justify-content-between mb-4">
-                            <div className="d-flex align-items-center">
-                              <img
-                                className="avatar-40 rounded-pill"
-                                src={user2}
-                                alt=""
-                                loading="lazy"
-                              />
-                              <div className="ms-3">
-                                <h6 className="mb-0 ">Lucy Tania</h6>
-                                <p className="mb-0">12 friends</p>
-                              </div>
-                            </div>
-                            <div className="d-flex align-items-center">
-                              <Link
-                                to="#"
-                                className="me-2 rounded bg-primary-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  add
-                                </span>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="me-3 rounded bg-danger-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  close
-                                </span>
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="iq-friend-request">
-                          <div className="iq-sub-card-big d-flex align-items-center justify-content-between mb-4">
-                            <div className="d-flex align-items-center">
-                              <img
-                                className="avatar-40 rounded-pill"
-                                src={user3}
-                                alt=""
-                                loading="lazy"
-                              />
-                              <div className=" ms-3">
-                                <h6 className="mb-0 ">Manny Petty</h6>
-                                <p className="mb-0">3 friends</p>
-                              </div>
-                            </div>
-                            <div className="d-flex align-items-center">
-                              <Link
-                                to="#"
-                                className="me-2 rounded bg-primary-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  add
-                                </span>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="me-3 rounded bg-danger-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  close
-                                </span>
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="iq-friend-request">
-                          <div className="iq-sub-card-big d-flex align-items-center justify-content-between">
-                            <div className="d-flex align-items-center">
-                              <img
-                                className="avatar-40 rounded-pill"
-                                src={user4}
-                                alt=""
-                                loading="lazy"
-                              />
-                              <div className="ms-3">
-                                <h6 className="mb-0 ">Marsha Mello</h6>
-                                <p className="mb-0">15 friends</p>
-                              </div>
-                            </div>
-                            <div className="d-flex align-items-center">
-                              <Link
-                                to="#"
-                                className="me-2 rounded bg-primary-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  add
-                                </span>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="me-3 rounded bg-danger-subtle border-0 d-inline-block px-1"
-                              >
-                                <span className="material-symbols-outlined font-size-18 align-text-bottom">
-                                  close
-                                </span>
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <button
-                          type="button"
-                          className="btn btn-primary fw-500 mt-4"
-                        >
-                          View More Request
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </Dropdown.Menu>
-              </Dropdown>
+
               <Modal
                 show={show}
                 onHide={handleClose}
@@ -673,7 +509,7 @@ const Header = () => {
                 id="custom-post-modal"
               >
                 <div style={{ padding: "20px" }}>
-                  <h2 style={{ textAlign: "center" }}>Add Acomudation</h2>
+                  <h2 style={{ textAlign: "center" }}>Add Accomodation</h2>
                   <Form onSubmit={handleUpload}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Hotel Images</Form.Label>
@@ -810,113 +646,19 @@ const Header = () => {
                 <span className="mobile-text d-none ms-3">Message</span>
                 {/* </Dropdown.Toggle> */}
               </Link>
-
-              <Dropdown as="li" className="nav-item">
-                <Dropdown.Toggle
+              <Link to={"/dashboard/app/notification"} className=" d-flex align-items-center">
+                {/* <Dropdown.Toggle
                   as="a"
-                  className="search-toggle d-flex align-items-center"
-                  id="notification-drop"
-                >
-                  <span className="material-symbols-outlined position-relative">
-                    notifications
-                    <span className="bg-primary text-white notification-badge"></span>
-                  </span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu
-                  className={`sub-drop header-notification `}
-                  aria-labelledby="notification-drop"
-                  data-bs-popper="static"
-                >
-                  <Card className=" m-0 shadow">
-                    <div className="card-header d-flex justify-content-between px-0 pb-4 mx-5 border-bottom">
-                      <div className="header-title">
-                        <h5 className="fw-semibold">Notifications</h5>
-                      </div>
-                      <h6 className="material-symbols-outlined">settings</h6>
-                    </div>
-                    <Card.Body>
-                      <div className="item-header-scroll">
-                        <Link to="#">
-                          <div className="d-flex gap-3 mb-4">
-                            <img
-                              className="avatar-32 rounded-pill"
-                              src={user5}
-                              alt=""
-                            />
-                            <div>
-                              <h6 className="font-size-14">
-                                Pete Sariya{" "}
-                                <span className="text-body fw-normal">
-                                  voted for
-                                </span>{" "}
-                                combination of colors from your brand palette{" "}
-                              </h6>
-                              <small className="text-body fw-500">
-                                1 month ago
-                              </small>
-                            </div>
-                          </div>
-                        </Link>
-                        <Link to="#">
-                          <div className="d-flex gap-3 mb-4">
-                            <img
-                              className="avatar-32 rounded-pill"
-                              src={user2}
-                              alt=""
-                              loading="lazy"
-                            />
-                            <div>
-                              <h6 className="font-size-14">
-                                Dima Davydov{" "}
-                                <span className="text-body fw-normal">
-                                  replied to your
-                                </span>{" "}
-                                <span className="text-primary fw-semibold">
-                                  Comment
-                                </span>
-                              </h6>
-                              <small className="text-body fw-500">
-                                1 month ago
-                              </small>
-                            </div>
-                          </div>
-                        </Link>
-                        <Link to="#">
-                          <div className="d-flex gap-3 mb-4">
-                            <img
-                              className="avatar-32 rounded-pill"
-                              src={user3}
-                              alt=""
-                              loading="lazy"
-                            />
-                            <div>
-                              <h6 className="font-size-14">
-                                Esther Howard{" "}
-                                <span className="text-body fw-normal">
-                                  reacted comment in to your{" "}
-                                </span>
-                                <span className="text-primary fw-semibold">
-                                  post
-                                </span>
-                                .
-                              </h6>
-                              <small className="text-body fw-500">
-                                19 min ago
-                              </small>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-primary fw-500 w-100"
-                      >
-                        View All Notifications
-                      </button>
-                    </Card.Body>
-                  </Card>
-                </Dropdown.Menu>
-              </Dropdown>
+                  to="#"
+                  className=" d-flex align-items-center"
+                  id="mail-drop"
+                > */}
+                <span className="material-symbols-outlined position-relative">
+                  notifications
+                  <span className="bg-primary text-white notification-badge"></span>
+                </span>
+                {/* </Dropdown.Toggle> */}
+              </Link>
 
               <Nav.Item className="nav-item d-none d-lg-none">
                 <Link
@@ -940,8 +682,8 @@ const Header = () => {
                 >
                   <Image
                     src={
-                      user?.profile_picture?.url
-                        ? user?.profile_picture?.url
+                      user?.profile_Picture?.url
+                        ? user?.profile_Picture?.url
                         : user1
                     }
                     className="img-fluid rounded-circle avatar-48 border border-2 me-3"
@@ -980,30 +722,7 @@ const Header = () => {
                           </Link>
                         </div>
                       </div>
-                      <div className="d-flex align-items-center iq-sub-card border-0">
-                        <span className="material-symbols-outlined">
-                          manage_accounts
-                        </span>
-                        <div className="ms-3">
-                          <Link
-                            to="/dashboard/app/user-account-setting"
-                            className="mb-0 h6"
-                          >
-                            Account settings
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="d-flex align-items-center iq-sub-card border-0">
-                        <span className="material-symbols-outlined">lock</span>
-                        <div className="ms-3">
-                          <Link
-                            to="/dashboard/app/user-privacy-setting"
-                            className="mb-0 h6"
-                          >
-                            Privacy Settings
-                          </Link>
-                        </div>
-                      </div>
+
                       <div className="d-flex align-items-center iq-sub-card">
                         <span className="material-symbols-outlined">login</span>
                         <div className="ms-3">
@@ -1011,33 +730,6 @@ const Header = () => {
                             Sign out
                           </Link>
                         </div>
-                      </div>
-                      <div className=" iq-sub-card">
-                        <h5>Chat Settings</h5>
-                      </div>
-                      <div className="d-flex align-items-center iq-sub-card border-0">
-                        <i className="material-symbols-outlined text-success md-14">
-                          circle
-                        </i>
-                        <div className="ms-3">Online</div>
-                      </div>
-                      <div className="d-flex align-items-center iq-sub-card border-0">
-                        <i className="material-symbols-outlined text-warning md-14">
-                          circle
-                        </i>
-                        <div className="ms-3">Away</div>
-                      </div>
-                      <div className="d-flex align-items-center iq-sub-card border-0">
-                        <i className="material-symbols-outlined text-danger md-14">
-                          circle
-                        </i>
-                        <div className="ms-3">Disconnected</div>
-                      </div>
-                      <div className="d-flex align-items-center iq-sub-card border-0">
-                        <i className="material-symbols-outlined text-gray md-14">
-                          circle
-                        </i>
-                        <div className="ms-3">Invisible</div>
                       </div>
                     </Card.Body>
                   </Card>

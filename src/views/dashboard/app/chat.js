@@ -22,29 +22,31 @@ const Chat = () => {
 
   useEffect(() => {
     if (state !== null) {
-      setActive(state)
-      console.log({state,chatRoomId :chatRoom[state]?._id})
+      setActive(state);
+      console.log({ state, chatRoomId: chatRoom[state]?._id });
       const getMessages = async () => {
-        
-  const otherUser = chatRoom[state]?.users
-  ?.filter((item) => {
-    return item?._id !== user?._id;
-  })
-  ?.at(0);
+        const otherUser = chatRoom[state]?.users
+          ?.filter((item) => {
+            return item?._id !== user?._id;
+          })
+          ?.at(0);
         const token = JSON.parse(localStorage.getItem("user"))?.token;
         await axios
-          .get(`${ApiLink}/chat/get-chat-room-Message/${chatRoom[state]?._id}`, {
-            headers: { Authorization: "Bearer " + token },
-          })
+          .get(
+            `${ApiLink}/chat/get-chat-room-Message/${chatRoom[state]?._id}`,
+            {
+              headers: { Authorization: "Bearer " + token },
+            }
+          )
           .then((result) => {
             setRoomUser(otherUser);
-    
+
             setActive(state);
             console.log(result.data?.messages, "result.data.messages");
             setMessage(result.data?.messages);
           });
       };
-      return ()=>getMessages()
+      return () => getMessages();
     }
   }, []);
   //date

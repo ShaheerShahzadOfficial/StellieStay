@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Card";
-import { Col, Collapse, Dropdown, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import {
+  Col,
+  Collapse,
+  Dropdown,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ShareOffcanvasNew from "../ShareOffcanvasNew";
 import icon1 from "../../assets/images/icon/01.png";
@@ -83,7 +90,7 @@ const Post = ({ items }) => {
           ])
         );
 
-        setComment('')
+        setComment("");
       })
       .catch((error) => {
         console.log(error.response || error);
@@ -116,63 +123,42 @@ const Post = ({ items }) => {
       })
       .catch((error) => {
         console.log(error.response || error);
-
       });
   };
   return (
     <Row className="special-post-container">
-                  <Col sm={12} className="special-post">
-    <Card className=" card-block card-stretch card-height">
-      <FsLightbox
-        toggler={imageController.toggler}
-        sources={items.file?.map((item) => item.url)}
-        slide={imageController.slide}
-      />
-      <Card.Body>
-        <div className="user-post-data">
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="me-3 flex-shrik-0">
-              <img
-                className="border border-2 rounded-circle user-post-profile"
-                src={items.profile ? items.profile : user01}
-                alt=""
-              />
-            </div>
-            <div className="w-100">
+      <Col sm={12} className="special-post">
+        <Card className=" card-block card-stretch card-height">
+          <FsLightbox
+            toggler={imageController.toggler}
+            sources={items.file?.map((item) => item.url)}
+            slide={imageController.slide}
+          />
+          <Card.Body>
+            <div className="user-post-data">
+              <Link to={`/dashboard/app/user/${items?.postedBy?._id}`}>
               <div className="d-flex align-items-center justify-content-between">
-                <div>
-                  <h6 className="mb-0 d-inline-block">{items.postedBy.name}</h6>{" "}
-                  <span className="d-inline-block text-primary">
-                    <svg
-                      className="align-text-bottom"
-                      width="17"
-                      height="17"
-                      viewBox="0 0 17 17"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M11.8457 0H4.34822C1.73547 0 0.0974121 1.84995 0.0974121 4.46789V11.5321C0.0974121 14.1501 1.72768 16 4.34822 16H11.8449C14.4663 16 16.0974 14.1501 16.0974 11.5321V4.46789C16.0974 1.84995 14.4663 0 11.8457 0Z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M5.09741 7.99978L7.09797 9.9995L11.0974 6.00006"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>{" "}
-                  {/* <span className="mb-0 d-inline-block text-capitalize fw-medium">
+                <div className="me-3 flex-shrik-0">
+                  <img
+                    className="border border-2 rounded-circle user-post-profile"
+                    src={items.postedBy?.profile_Picture?.url ? items?.postedBy.profile_Picture?.url : user01}
+                    alt=""
+                  />
+                </div>
+                <div className="w-100">
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div>
+                      <h6 className="mb-0 d-inline-block">
+                        {items.postedBy.name}
+                      </h6>{" "}
+                      <span className="d-inline-block text-primary"></span>{" "}
+                      {/* <span className="mb-0 d-inline-block text-capitalize fw-medium">
                     posted an update
                   </span> */}
-                  <p className="mb-0">{items.createdOn.split("T")[0]}</p>
-                </div>
+                      <p className="mb-0">{items.createdOn.split("T")[0]}</p>
+                    </div>
 
-                {/* <div className="card-post-toolbar">
+                    {/* <div className="card-post-toolbar">
                   <Dropdown>
                     <Dropdown.Toggle id="post-option" as="span">
                       <span className="material-symbols-outlined">
@@ -231,13 +217,14 @@ const Post = ({ items }) => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </div> */}
+                  </div>
+                </div>
               </div>
+              </Link>
             </div>
-          </div>
-        </div>
-        <div className="mt-4">
-          <p className="m-0">{items.caption}</p>
-          {/* <ul className="list-inline m-0 p-0 d-flex flex-wrap gap-1">
+            <div className="mt-4">
+              <p className="m-0">{items.caption}</p>
+              {/* <ul className="list-inline m-0 p-0 d-flex flex-wrap gap-1">
                               <li>
                                 <Link to="#">#friends</Link>
                               </li>
@@ -254,25 +241,25 @@ const Post = ({ items }) => {
                                 <Link to="#">#celebration</Link>
                               </li>
                             </ul> */}
-        </div>
-        <div className="user-post mt-4">
-          {items.file.map((image, i) => (
-            <Link
-              onClick={() => imageOnSlide(1)}
-              to="#"
-              className="rounded"
-              key={i}
-            >
-              <img
-                src={image.url}
-                alt="post-images"
-                className="img-fluid rounded w-100"
-                loading="lazy"
-              />
-            </Link>
-          ))}
-        </div>
-        {/* <div className="post-meta-likes mt-4">
+            </div>
+            <div className="user-post mt-4">
+              {items.file.map((image, i) => (
+                <Link
+                  onClick={() => imageOnSlide(1)}
+                  to="#"
+                  className="rounded"
+                  key={i}
+                >
+                  <img
+                    src={image.url}
+                    alt="post-images"
+                    className="img-fluid rounded w-100"
+                    loading="lazy"
+                  />
+                </Link>
+              ))}
+            </div>
+            {/* <div className="post-meta-likes mt-4">
                             <div className="d-flex align-items-center gap-2 flex-wrap">
                               <ul className="list-inline m-0 p-0 post-user-liked-list">
                                 <li>
@@ -321,30 +308,30 @@ const Post = ({ items }) => {
                               </div>
                             </div>
                           </div> */}
-        <div className="comment-area mt-4 pt-4 border-top">
-          <div className="d-flex justify-content-between align-items-center flex-wrap">
-            <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-              <div className="like-data">
-                <div className="dropdown" onClick={like}>
-                  <span
-                    className="dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    role="button"
-                  >
-                    {isLiked ? (
-                      <span className="material-symbols-outlined align-text-top font-size-20 like">
-                        thumb_up
+            <div className="comment-area mt-4 pt-4 border-top">
+              <div className="d-flex justify-content-between align-items-center flex-wrap">
+                <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
+                  <div className="like-data">
+                    <div className="dropdown" onClick={like}>
+                      <span
+                        className="dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        role="button"
+                      >
+                        {isLiked ? (
+                          <span className="material-symbols-outlined align-text-top font-size-20 like">
+                            thumb_up
+                          </span>
+                        ) : (
+                          <span className="material-symbols-outlined align-text-top font-size-20">
+                            thumb_up
+                          </span>
+                        )}
+                        <span className="fw-medium">{items.length} Likes</span>
                       </span>
-                    ) : (
-                      <span className="material-symbols-outlined align-text-top font-size-20">
-                        thumb_up
-                      </span>
-                    )}
-                    <span className="fw-medium">{items.length} Likes</span>
-                  </span>
-                  {/* <div className="dropdown-menu py-2 shadow">
+                      {/* <div className="dropdown-menu py-2 shadow">
                     <OverlayTrigger
                       placement="top"
                       overlay={<Tooltip>Like</Tooltip>}
@@ -395,26 +382,26 @@ const Post = ({ items }) => {
                       <img src={icon7} className="img-fluid me-2" alt="" />
                     </OverlayTrigger>
                   </div> */}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="d-flex align-items-center gap-3 flex-shrink-0">
-              <div
-                className="total-comment-block"
-                type="button"
-                aria-controls="commentcollapes"
-                aria-expanded={open}
-                onClick={() => setOpen(!open)}
-              >
-                <span className="material-symbols-outlined align-text-top font-size-20">
-                  comment
-                </span>{" "}
-                <span className="fw-medium">
-                  {commentArray?.length} Comment
-                </span>
-              </div>
+                <div className="d-flex align-items-center gap-3 flex-shrink-0">
+                  <div
+                    className="total-comment-block"
+                    type="button"
+                    aria-controls="commentcollapes"
+                    aria-expanded={open}
+                    onClick={() => setOpen(!open)}
+                  >
+                    <span className="material-symbols-outlined align-text-top font-size-20">
+                      comment
+                    </span>{" "}
+                    <span className="fw-medium">
+                      {commentArray?.length} Comment
+                    </span>
+                  </div>
 
-              {/* <div className="share-block d-flex align-items-center feather-icon">
+                  {/* <div className="share-block d-flex align-items-center feather-icon">
                                   <Link
                                     to="#"
                                     data-bs-toggle="modal"
@@ -431,119 +418,119 @@ const Post = ({ items }) => {
                                     </span>
                                   </Link>
                                 </div> */}
-              <ShareOffcanvasNew
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-              />
-            </div>
-          </div>
-
-          <Collapse in={open}>
-            <div id="commentcollapes" className="border-top mt-4 pt-4">
-              {commentArray.map((comment, i) => (
-                <div key={i}>
-                  <ul className="list-inline m-o p-0 comment-list">
-                    <li className="mb-3">
-                      <div className="comment-list-block">
-                        <div className="d-flex align-items-center gap-3">
-                          <div className="comment-list-user-img flex-shrink-0">
-                            <img
-                              src={
-                                comment?.user?.profile_Picture?.url
-                                  ? comment?.user?.profile_Picture?.url
-                                  : user6
-                              }
-                              alt="userimg"
-                              className="avatar-48 rounded-circle img-fluid"
-                              loading="lazy"
-                            />
-                          </div>
-                          <div className="comment-list-user-data">
-                            <div className="d-inline-flex align-items-center gap-1 flex-wrap">
-                              <h6 className="m-0">{comment?.user?.name}</h6>
-                              <span className="d-inline-block text-primary">
-                                <svg
-                                  className="align-text-bottom"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="17"
-                                  height="17"
-                                  viewBox="0 0 17 17"
-                                  fill="none"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M12.2483 0.216553H4.75081C2.13805 0.216553 0.5 2.0665 0.5 4.68444V11.7487C0.5 14.3666 2.13027 16.2166 4.75081 16.2166H12.2475C14.8689 16.2166 16.5 14.3666 16.5 11.7487V4.68444C16.5 2.0665 14.8689 0.216553 12.2483 0.216553Z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M5.5 8.21627L7.50056 10.216L11.5 6.21655"
-                                    stroke="white"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="comment-list-user-comment">
-                          <div className="comment-list-comment">
-                            {comment?.comment}
-                          </div>
-                          <div className="comment-list-action mt-2">
-                            <ul className="list-inline m-0 p-0 d-flex align-items-center gap-2">
-                              <li>
-                                <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
-                                  <div className="like-data"></div>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              ))}
-
-              <div className="add-comment-form-block">
-                <div className="d-flex align-items-center gap-3">
-                  <div className="flex-shrink-0">
-                    <img
-                      src={user1}
-                      alt="userimg"
-                      className="avatar-48 rounded-circle img-fluid"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="add-comment-form">
-                    <form onSubmit={handleCommentSubmit}>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Write a Comment..."
-                        value={Comment}
-                        onChange={(e) => setComment(e.target.value)}
-                      />
-                      <button
-                        // onClick={handleCommentSubmit}
-                        type="submit"
-                        className="btn btn-primary font-size-12 text-capitalize px-5"
-                      >
-                        post
-                      </button>
-                    </form>
-                  </div>
+                  <ShareOffcanvasNew
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                  />
                 </div>
               </div>
+
+              <Collapse in={open}>
+                <div id="commentcollapes" className="border-top mt-4 pt-4">
+                  {commentArray.map((comment, i) => (
+                    <div key={i}>
+                      <ul className="list-inline m-o p-0 comment-list">
+                        <li className="mb-3">
+                          <div className="comment-list-block">
+                            <div className="d-flex align-items-center gap-3">
+                              <div className="comment-list-user-img flex-shrink-0">
+                                <img
+                                  src={
+                                    comment?.user?.profile_Picture?.url
+                                      ? comment?.user?.profile_Picture?.url
+                                      : user6
+                                  }
+                                  alt="userimg"
+                                  className="avatar-48 rounded-circle img-fluid"
+                                  loading="lazy"
+                                />
+                              </div>
+                              <div className="comment-list-user-data">
+                                <div className="d-inline-flex align-items-center gap-1 flex-wrap">
+                                  <h6 className="m-0">{comment?.user?.name}</h6>
+                                  <span className="d-inline-block text-primary">
+                                    <svg
+                                      className="align-text-bottom"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="17"
+                                      height="17"
+                                      viewBox="0 0 17 17"
+                                      fill="none"
+                                    >
+                                      <path
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
+                                        d="M12.2483 0.216553H4.75081C2.13805 0.216553 0.5 2.0665 0.5 4.68444V11.7487C0.5 14.3666 2.13027 16.2166 4.75081 16.2166H12.2475C14.8689 16.2166 16.5 14.3666 16.5 11.7487V4.68444C16.5 2.0665 14.8689 0.216553 12.2483 0.216553Z"
+                                        fill="currentColor"
+                                      />
+                                      <path
+                                        d="M5.5 8.21627L7.50056 10.216L11.5 6.21655"
+                                        stroke="white"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="comment-list-user-comment">
+                              <div className="comment-list-comment">
+                                {comment?.comment}
+                              </div>
+                              <div className="comment-list-action mt-2">
+                                <ul className="list-inline m-0 p-0 d-flex align-items-center gap-2">
+                                  <li>
+                                    <div className="like-block position-relative d-flex align-items-center flex-shrink-0">
+                                      <div className="like-data"></div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
+
+                  <div className="add-comment-form-block">
+                    <div className="d-flex align-items-center gap-3">
+                      <div className="flex-shrink-0">
+                        <img
+                          src={user1}
+                          alt="userimg"
+                          className="avatar-48 rounded-circle img-fluid"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="add-comment-form">
+                        <form onSubmit={handleCommentSubmit}>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Write a Comment..."
+                            value={Comment}
+                            onChange={(e) => setComment(e.target.value)}
+                          />
+                          <button
+                            // onClick={handleCommentSubmit}
+                            type="submit"
+                            className="btn btn-primary font-size-12 text-capitalize px-5"
+                          >
+                            post
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Collapse>
             </div>
-          </Collapse>
-        </div>
-      </Card.Body>
-    </Card>
-    </Col>
+          </Card.Body>
+        </Card>
+      </Col>
     </Row>
   );
 };

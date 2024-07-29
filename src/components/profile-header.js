@@ -5,7 +5,7 @@ const ProfileHeader =(props)=>{
         <>
             <div className="header-for-bg">
                 <div className="background-header position-relative">
-                    <img src={props.img} className="img-fluid w-100" alt="header-bg"/>
+                    <img src={props.img} className="w-100" style={{height:'300px'}} alt="header-bg"/>
                     <div className="title-on-header">
                         <div className="data-block">
                             <h2>{props.title}</h2>
