@@ -10,6 +10,7 @@ import axios from "axios";
 import { ApiLink } from "../../../store/setting/reducers";
 import Loader from "../../../components/custom/Loader";
 import { useSelector } from "react-redux";
+import GroupCard from "../../../components/custom/GroupCard";
 
 const Groups = () => {
   const [show, setShow] = useState(false);
@@ -191,66 +192,7 @@ const Groups = () => {
           <Container>
             <div className="d-grid gap-3 d-grid-template-1fr-19">
               {Groups?.map((item, i) => (
-                <Card key={i} className="group-box mb-0">
-                  <div className="top-bg-image">
-                    <img
-                      src={
-                        item?.GroupBanner?.url ? item?.GroupBanner?.url : img1
-                      }
-                      className="img-fluid w-100"
-                      alt="group-bg"
-                    />
-                  </div>
-                  <Card.Body className="text-center">
-                    <div className="group-icon">
-                      <img
-                        src={item?.groupIcon?.url ? item?.groupIcon?.url : gi1}
-                        alt="profile-img"
-                        className="rounded-2 img-fluid avatar-90 border border-4"
-                      />
-                    </div>
-                    <div className="group-info mt-3 mb-2">
-                      <Link
-                        to={`/dashboards/app/group-detail/${item?._id}`}
-                        className="h4"
-                      >
-                        {item?.name}
-                      </Link>
-                    </div>
-                    <div className="group-details pb-4 mb-4 border-bottom">
-                      <ul className="d-flex align-items-center justify-content-center list-inline m-0 p-0 gap-3">
-                        {/* <li>
-                          <div className="d-flex align-items-center gap-1">
-                            <span className="material-symbols-outlined font-size-18">
-                              description
-                            </span>
-                            <span className="text-capitalize">1 posts</span>
-                          </div>
-                        </li> */}
-                        <li>
-                          <div className="d-flex align-items-center gap-1">
-                            <span className="material-symbols-outlined font-size-18">
-                              group
-                            </span>
-                            <span className="text-capitalize">
-                              Members {item?.users?.length}
-                            </span>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <button
-                      onClick={()=>joinGroup(item._id)}
-                      type="submit"
-                      className="btn btn-primary-subtle fw-semibold px-3"
-                    >
-                      {item?.users?.includes(user?._id)
-                        ? "Leave Group"
-                        : " Join Group"}
-                    </button>
-                  </Card.Body>
-                </Card>
+                <GroupCard key={i}  item={item}/>
               ))}
 
               {/* <Card className="group-box mb-0">

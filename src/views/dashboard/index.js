@@ -58,7 +58,7 @@ import Stories from "../../components/Stories";
 // Share-offcanvas
 import ShareOffcanvasNew from "../../components/ShareOffcanvasNew";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataAsync, selectData } from "../../store/setting/reducers";
+import { ApiLink, fetchDataAsync, selectData } from "../../store/setting/reducers";
 import Post from "../../components/custom/Post";
 
 
@@ -107,172 +107,11 @@ const Index = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  // stories
-  // const stories = [
-  //   {
-  //     id: "yourstory",
-  //     photo: user8,
-  //     name: "Your Story",
-  //     link: "https://ramon.codes",
-  //     preview: [
-  //       {
-  //         storyid: "yourstory-1",
-  //         type: "photo",
-  //         length: 3,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //       {
-  //         storyid: "yourstory-12",
-  //         type: "video",
-  //         length: 0,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.mp4",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "ali",
-  //     photo: user1,
-  //     name: "Ali",
-  //     link: "",
-  //     preview: [
-  //       {
-  //         storyid: "ali-1",
-  //         type: "video",
-  //         length: 0,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/4.mp4",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/4.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //       {
-  //         storyid: "ali-2",
-  //         type: "photo",
-  //         length: 3,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/5.jpg",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/5.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
 
-  //       {
-  //         storyid: "ali-3",
-  //         type: "photo",
-  //         length: 3,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png",
-  //         link: "https://ramon.codes",
-  //         linkText: "Visit my Portfolio",
-  //         seen: "false",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "ammy",
-  //     photo: user12,
-  //     name: "Ammy",
-  //     link: "",
-  //     preview: [
-  //       {
-  //         storyid: "ammy-1",
-  //         type: "photo",
-  //         length: 5,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/6.jpg",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/6.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //       {
-  //         storyid: "ammy-2",
-  //         type: "photo",
-  //         length: 3,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/7.jpg",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/7.jpg",
-  //         link: "http://ladygaga.com",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "roger-1",
-  //     photo: user3,
-  //     name: "Roger",
-  //     link: "",
-  //     preview: [
-  //       {
-  //         storyid: "roger-1",
-  //         type: "photo",
-  //         length: 5,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/8.jpg",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/8.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "justin",
-  //     photo: user11,
-  //     name: "Justin",
-  //     link: "",
-  //     preview: [
-  //       {
-  //         storyid: "justin-1",
-  //         type: "photo",
-  //         length: 10,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "sado",
-  //     photo: user3,
-  //     name: "Sado",
-  //     link: "",
-  //     preview: [
-  //       {
-  //         storyid: "sado-1",
-  //         type: "photo",
-  //         length: 10,
-  //         src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-  //         storypreview:
-  //           "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-  //         link: "",
-  //         linkText: "false",
-  //         seen: "false",
-  //       },
-  //     ],
-  //   },
-  // ];
   const dispatch = useDispatch();
   const { data } = useSelector(selectData);
 
-  const ApiLink = "https://stellie-stay-backend.vercel.app";
+  // const ApiLink = "https://stellie-stay-backend.vercel.app";
   useEffect(() => {
     dispatch(fetchDataAsync(`${ApiLink}/post/getPost`)); // Replace with your API endpoint
   }, [dispatch]);

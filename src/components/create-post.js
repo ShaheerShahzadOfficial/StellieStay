@@ -65,6 +65,7 @@ const CreatePost = (props) => {
           file,
         })
       );
+      handleClose()
     }
   };
 
@@ -86,7 +87,7 @@ const CreatePost = (props) => {
       )
       .then(({ data }) => {
         console.log(data);
-        props.setGroupPost((pre) => [...pre, data.post]);
+        props.setGroupPost((pre) => [data.post,...pre ]);
         handleClose();
       })
       .catch((error) => {

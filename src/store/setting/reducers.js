@@ -358,6 +358,8 @@ export const uploadContentAsync = (formData) => async (dispatch) => {
     const response = await uploadContent(formData);
 
     dispatch(uploadContentSuccess(response));
+    dispatch(fetchDataAsync(`${ApiLink}/post/getPost`));
+    
   } catch (error) {
     dispatch(uploadContentFailure(error.message));
   }

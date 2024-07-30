@@ -55,7 +55,7 @@ const GroupDetail = () => {
       .then((res) => {
         console.log(res.data);
         setGroupDetails(res.data.group);
-        setGroupPosts(res.data.posts);
+        setGroupPosts(res.data.posts.sort((a,b)=>new Date(b?.createdOn)-new Date(a?.createdOn)));
       })
       .catch((error) => {
         console.log(error);
@@ -66,7 +66,6 @@ const GroupDetail = () => {
   }, []);
   return (
     <>
-      {" "}
       {Loading ? (
         <div id="content-page" className="content-inner">
           <div
