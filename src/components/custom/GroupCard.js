@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { ApiLink } from "../../store/setting/reducers";
 import axios from "axios";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 const GroupCard = ({ item }) => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [Users, setUsers] = useState(item?.users);
   const navigateTOGroup = () => {
     navigate(`/dashboards/app/group-detail/${item?._id}`);
   };
@@ -29,6 +30,12 @@ const GroupCard = ({ item }) => {
       .then(({ data }) => {
         if (data.message === "You have joined the group") {
           navigate(`/dashboards/app/group-detail/${id}`);
+        } else {
+          setUsers(
+            Users?.filter((item) => {
+              return item !== user?._id;
+            })
+          );
         }
       });
   };
@@ -76,9 +83,7 @@ const GroupCard = ({ item }) => {
                 <span className="material-symbols-outlined font-size-18">
                   group
                 </span>
-                <span className="text-capitalize">
-                  Members {item?.users?.length}
-                </span>
+                <span className="text-capitalize">Members {Users?.length}</span>
               </div>
             </li>
           </ul>
@@ -90,7 +95,7 @@ const GroupCard = ({ item }) => {
             type="submit"
             className="btn btn-primary-subtle fw-semibold px-3"
           >
-            {item?.users?.includes(user?._id) ? "Leave Group" : " Join Group"}
+            {Users?.includes(user?._id) ? "Leave Group" : " Join Group"}
           </button>
         ) : (
           <button
